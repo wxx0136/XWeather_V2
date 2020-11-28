@@ -9,17 +9,22 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.xweather_v2.Base.BaseFragment;
+import androidx.fragment.app.Fragment;
+
 import com.example.xweather_v2.Common.Common;
 import com.example.xweather_v2.Model.CurrentWeatherResult;
 import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
-public class CityWeatherFragment extends BaseFragment {
+import org.xutils.common.Callback;
+import org.xutils.http.RequestParams;
+import org.xutils.x;
+
+public class CityWeatherFragment extends Fragment implements Callback.CommonCallback<String> {
 
     ImageView img_weather;
     TextView txt_city_name, txt_temperature, txt_description, txt_date_time, txt_maxTemp, txt_minTemp,
-            txt_sunrise, txt_sunset, txt_wind, txt_feelsLike,  txt_pressure, txt_humidity, txt_visibility, txt_cloudiness;
+            txt_sunrise, txt_sunset, txt_wind, txt_feelsLike, txt_pressure, txt_humidity, txt_visibility, txt_cloudiness;
     LinearLayout panel_today_general, panel_today_details;
 
     public CityWeatherFragment() {
@@ -32,8 +37,14 @@ public class CityWeatherFragment extends BaseFragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_city_weather, container, false);
         initView(view);
-        // call parent class method 1
-        loadData(Common.currentWeatherByLatLngURL());
+        // GET http request
+        String currentWeatherAPI = "https://api.openweathermap.org/data/2.5/onecall";
+        RequestParams params = new RequestParams(currentWeatherAPI);
+        params.addQueryStringParameter("lat", String.valueOf(Common.current_location.getLatitude()));
+        params.addQueryStringParameter("lon", String.valueOf(Common.current_location.getLatitude()));
+        params.addQueryStringParameter("appid", Common.APP_ID);
+        params.addQueryStringParameter("units", Common.units);
+        x.http().get(params, this);
 
         return view;
     }
@@ -45,7 +56,17 @@ public class CityWeatherFragment extends BaseFragment {
 
     @Override
     public void onError(Throwable ex, boolean isOnCallback) {
-        super.onError(ex, isOnCallback);
+
+    }
+
+    @Override
+    public void onCancelled(CancelledException cex) {
+
+    }
+
+    @Override
+    public void onFinished() {
+
     }
 
     @SuppressLint("SetTextI18n")

@@ -11,11 +11,11 @@ public class Common {
     public static final String baseURL = "https://api.openweathermap.org/data/2.5/";
     public static final String APP_ID = "c86e7feaf57899bbd3e116870f278257";
 
-    private static final String UNIT_METRIC = "metric";
-    private static final String UNIT_IMPERIAL = "imperial";
+    public static final String UNIT_METRIC = "metric";
+    public static final String UNIT_IMPERIAL = "imperial";
 
     public static Location current_location = null;
-    private static String units = "metric";
+    public static String units = "metric";
 
     public static String convertUnixToDate(long dt) {
         Date date = new Date(dt * 1000L);
