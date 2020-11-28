@@ -3,20 +3,20 @@ package com.example.xweather_v2.Model;
 import java.util.List;
 
 public class Hourly {
-    public int dt;
-    public double temp;
-    public double feels_like;
-    public int pressure;
-    public int humidity;
-    public double dew_point;
-    public double uvi;
-    public int clouds;
-    public int visibility;
-    public double wind_speed;
-    public int wind_deg;
-    public List<Weather> weather;
-    public double pop;
-    public Rain rain;
+    private int dt;
+    private double temp;
+    private double feels_like;
+    private int pressure;
+    private int humidity;
+    private double dew_point;
+    private double uvi;
+    private int clouds;
+    private int visibility;
+    private double wind_speed;
+    private int wind_deg;
+    private List<Weather> weather;
+    private double pop;
+    private Rain rain;
 
     public int getDt() {
         return dt;

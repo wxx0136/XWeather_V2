@@ -1,10 +1,9 @@
 package com.example.xweather_v2.Model;
 
 public class Wind {
-
-    public double speed;
-    public int deg;
-    public double gust;
+    private double speed;
+    private int deg;
+    private double gust;
 
     public double getSpeed() {
         return speed;

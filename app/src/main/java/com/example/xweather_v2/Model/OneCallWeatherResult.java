@@ -3,13 +3,13 @@ package com.example.xweather_v2.Model;
 import java.util.List;
 
 public class OneCallWeatherResult {
-    public double lat;
-    public double lon;
-    public String timezone;
-    public int timezone_offset;
-    public Current current;
-    public List<Hourly> hourly;
-    public List<Daily> daily;
+    private double lat;
+    private double lon;
+    private String timezone;
+    private int timezone_offset;
+    private Current current;
+    private List<Hourly> hourly;
+    private List<Daily> daily;
 
     public double getLat() {
         return lat;

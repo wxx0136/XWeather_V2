@@ -275,13 +275,13 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="CHANCE OF SNOW" />
+                        android:text="CLOUDINESS" />
 
                     <TextView
-                        android:id="@+id/txt_chanceOfSnow"
+                        android:id="@+id/txt_cloudiness"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="10%"
+                        android:text="10 %"
                         android:textColor="@color/design_default_color_primary"
                         android:textSize="24sp" />
 
@@ -302,7 +302,7 @@
                         android:id="@+id/txt_humidity"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="07:10"
+                        android:text="33 %"
                         android:textColor="@color/design_default_color_primary"
                         android:textSize="24sp" />
 
@@ -333,7 +333,7 @@
                         android:id="@+id/txt_wind"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="sw 2 m/s"
+                        android:text="2 m/s"
                         android:textColor="@color/design_default_color_primary"
                         android:textSize="24sp" />
 
@@ -371,26 +371,6 @@
                 android:background="@drawable/bottom_line"
                 android:orientation="horizontal">
 
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="PRECIPITATION" />
-
-                    <TextView
-                        android:id="@+id/txt_precipitation"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="0 mm"
-                        android:textColor="@color/design_default_color_primary"
-                        android:textSize="24sp" />
-
-                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -413,17 +393,6 @@
 
                 </LinearLayout>
 
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="24dp"
-                android:layout_marginRight="24dp"
-                android:background="@drawable/bottom_line"
-                android:orientation="horizontal">
-
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -439,36 +408,12 @@
                         android:id="@+id/txt_visibility"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="16.1 km"
+                        android:text="161000 m"
                         android:textColor="@color/design_default_color_primary"
                         android:textSize="24sp" />
-
                 </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="UV INDEX" />
-
-                    <TextView
-                        android:id="@+id/txt_uvIndex"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="0"
-                        android:textColor="@color/design_default_color_primary"
-                        android:textSize="24sp" />
-
-                </LinearLayout>
-
 
             </LinearLayout>
-
 
         </LinearLayout>
 

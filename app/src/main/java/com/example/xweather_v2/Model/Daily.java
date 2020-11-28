@@ -3,21 +3,21 @@ package com.example.xweather_v2.Model;
 import java.util.List;
 
 public class Daily {
-    public int dt;
-    public int sunrise;
-    public int sunset;
-    public Temp temp;
-    public FeelsLike feels_like;
-    public int pressure;
-    public int humidity;
-    public double dew_point;
-    public double wind_speed;
-    public int wind_deg;
-    public List<Weather> weather;
-    public int clouds;
-    public double pop;
-    public double uvi;
-    public double rain;
+    private int dt;
+    private int sunrise;
+    private int sunset;
+    private Temp temp;
+    private FeelsLike feels_like;
+    private int pressure;
+    private int humidity;
+    private double dew_point;
+    private double wind_speed;
+    private int wind_deg;
+    private List<Weather> weather;
+    private int clouds;
+    private double pop;
+    private double uvi;
+    private double rain;
 
     public int getDt() {
         return dt;

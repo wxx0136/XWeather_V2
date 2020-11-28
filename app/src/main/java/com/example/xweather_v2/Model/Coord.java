@@ -1,10 +1,10 @@
 package com.example.xweather_v2.Model;
 
 public class Coord {
-    public int lon;
-    public int lat;
+    private double lon;
+    private double lat;
 
-    public int getLon() {
+    public double getLon() {
         return lon;
     }
 
@@ -12,7 +12,7 @@ public class Coord {
         this.lon = lon;
     }
 
-    public int getLat() {
+    public double getLat() {
         return lat;
     }
 

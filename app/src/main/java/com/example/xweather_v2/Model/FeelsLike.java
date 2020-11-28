@@ -1,10 +1,10 @@
 package com.example.xweather_v2.Model;
 
 public class FeelsLike {
-    public double day;
-    public double night;
-    public double eve;
-    public double morn;
+    private double day;
+    private double night;
+    private double eve;
+    private double morn;
 
     public double getDay() {
         return day;

@@ -1,7 +1,7 @@
 package com.example.xweather_v2.Model;
 
 public class Clouds {
-    public int all;
+    private int all;
 
     public int getAll() {
         return all;

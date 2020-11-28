@@ -1,10 +1,10 @@
 package com.example.xweather_v2.Model;
 
 public class Weather {
-    public int id;
-    public String main;
-    public String description;
-    public String icon;
+    private int id;
+    private String main;
+    private String description;
+    private String icon;
 
     public int getId() {
         return id;
