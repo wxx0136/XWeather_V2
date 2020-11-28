@@ -28,7 +28,7 @@ public class CityWeatherFragment extends BaseFragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_city_weather, container, false);
         initView(view);
-        //调用父类方法
+        // call parent class method
         loadData(Common.oneCallURL(Common.CURRENT));
 
         return view;
