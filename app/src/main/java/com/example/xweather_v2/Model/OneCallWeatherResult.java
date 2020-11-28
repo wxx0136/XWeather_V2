@@ -2,7 +2,7 @@ package com.example.xweather_v2.Model;
 
 import java.util.List;
 
-public class WeatherResult {
+public class OneCallWeatherResult {
     public double lat;
     public double lon;
     public String timezone;

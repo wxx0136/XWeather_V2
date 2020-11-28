@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import com.example.xweather_v2.Base.BaseFragment;
 import com.example.xweather_v2.Common.Common;
+import com.example.xweather_v2.Model.OneCallWeatherResult;
+import com.google.gson.Gson;
 
 public class CityWeatherFragment extends BaseFragment {
 
@@ -29,20 +31,27 @@ public class CityWeatherFragment extends BaseFragment {
         View view = inflater.inflate(R.layout.fragment_city_weather, container, false);
         initView(view);
         // call parent class method
-        loadData(Common.oneCallURL(Common.CURRENT));
+        loadData(Common.oneCallURL());
 
         return view;
     }
 
     @Override
     public void onSuccess(String result) {
-        super.onSuccess(result);
+        parseShowData(result);
     }
 
     @Override
     public void onError(Throwable ex, boolean isOnCallback) {
         super.onError(ex, isOnCallback);
     }
+
+    private void parseShowData(String result) {
+        //        使用gson解析数据
+        OneCallWeatherResult oneCallWeatherResult = new Gson().fromJson(result, OneCallWeatherResult.class);
+        String icon = oneCallWeatherResult.getCurrent().getWeather().get(0).icon;
+    }
+
 
     private void initView(View view) {
 //        panel_today_general
