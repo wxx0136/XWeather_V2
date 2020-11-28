@@ -12,7 +12,7 @@
         android:layout_alignParentBottom="true">
 
         <ImageView
-            android:id="@+id/main_iv_add"
+            android:id="@+id/main_img_add_city"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignParentEnd="true"
@@ -21,7 +21,7 @@
             tools:ignore="ContentDescription" />
 
         <ImageView
-            android:id="@+id/main_iv_more"
+            android:id="@+id/main_img_more"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginStart="8dp"
