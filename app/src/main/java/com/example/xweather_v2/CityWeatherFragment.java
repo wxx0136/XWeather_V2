@@ -29,7 +29,7 @@ public class CityWeatherFragment extends BaseFragment {
         View view = inflater.inflate(R.layout.fragment_city_weather, container, false);
         initView(view);
         //调用父类方法
-        loadData(Common.oneCallURL());
+        loadData(Common.oneCallURL(Common.CURRENT));
 
         return view;
     }
