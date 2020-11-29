@@ -9,18 +9,17 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.fragment.app.Fragment;
-
+import com.example.xweather_v2.Base.BaseFragment;
 import com.example.xweather_v2.Common.Common;
 import com.example.xweather_v2.Model.CurrentWeatherResult;
+import com.example.xweather_v2.Model.OneCallBean;
 import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
-import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
 import org.xutils.x;
 
-public class CityWeatherFragment extends Fragment implements Callback.CommonCallback<String> {
+public class CityWeatherFragment extends BaseFragment {
 
     ImageView img_weather;
     TextView txt_city_name, txt_temperature, txt_description, txt_date_time, txt_maxTemp, txt_minTemp,
@@ -54,25 +53,11 @@ public class CityWeatherFragment extends Fragment implements Callback.CommonCall
         parseShowData(result);
     }
 
-    @Override
-    public void onError(Throwable ex, boolean isOnCallback) {
-
-    }
-
-    @Override
-    public void onCancelled(CancelledException cex) {
-
-    }
-
-    @Override
-    public void onFinished() {
-
-    }
-
     @SuppressLint("SetTextI18n")
     private void parseShowData(String result) {
-        //        使用gson解析数据
+        //        使用Gson解析数据
         CurrentWeatherResult currentWeatherResult = new Gson().fromJson(result, CurrentWeatherResult.class);
+        OneCallBean oneCallBean = new Gson().fromJson(result, OneCallBean.class);
 
         //        today_general
         String iconURL = "http://openweathermap.org/img/wn/" + currentWeatherResult.getWeather().get(0).getIcon() + "@2x.png";

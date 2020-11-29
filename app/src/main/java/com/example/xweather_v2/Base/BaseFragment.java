@@ -8,8 +8,7 @@ import org.xutils.x;
 
 public class BaseFragment extends Fragment implements Callback.CommonCallback<String> {
 
-    public void loadData(String path) {
-        RequestParams params = new RequestParams(path);
+    public void loadData(RequestParams params) {
         x.http().get(params, this);
     }
 
