@@ -43,6 +43,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         cityList = new ArrayList<>();
         imageViewList = new ArrayList<>();
         if (cityList.size() == 0) {
+            cityList.add("Toronto");
+            cityList.add("Montreal");
+            cityList.add("Calgary");
+            cityList.add("Ottawa");
+            cityList.add("Edmonton");
+            cityList.add("Mississauga");
             cityList.add("Winnipeg");
         }
 
@@ -50,10 +56,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         adapter = new CityFragmentPagerAdapter(getSupportFragmentManager(), 0, fragmentList);
         main_vp.setAdapter(adapter);
         initPoint();
-
-    }
-
-    private void initPoint() {
+        main_vp.setCurrentItem(fragmentList.size() - 1); // Set the default view is the last added one.
     }
 
     private void initPager() {
@@ -61,10 +64,42 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         for (int i = 0; i < cityList.size(); i++) {
             CityWeatherFragment cityWeatherFragment = new CityWeatherFragment();
             Bundle bundle = new Bundle();
-            bundle.putString("city_name",cityList.get(i));
+            bundle.putString("city_name", cityList.get(i));
             cityWeatherFragment.setArguments(bundle);
             fragmentList.add(cityWeatherFragment);
         }
+    }
+
+    private void initPoint() {
+        for (int i = 0; i < fragmentList.size(); i++) {
+            ImageView pIv = new ImageView(this);
+            pIv.setImageResource(R.drawable.little_dot_off);
+            pIv.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+            LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) pIv.getLayoutParams();
+            lp.setMargins(0, 0, 20, 0);
+            imageViewList.add(pIv);
+            main_layout_point.addView(pIv);
+        }
+        imageViewList.get(imageViewList.size() - 1).setImageResource(R.drawable.little_dot_on);
+
+        // Add a listener to let the point switch when change the city page.
+        main_vp.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                for (int i = 0; i < imageViewList.size(); i++) {
+                    imageViewList.get(i).setImageResource(R.drawable.little_dot_off);
+                }
+                imageViewList.get(position).setImageResource(R.drawable.little_dot_on);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+            }
+        });
     }
 
     @SuppressLint("NonConstantResourceId")

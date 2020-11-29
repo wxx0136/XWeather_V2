@@ -80,6 +80,7 @@ public class CityWeatherFragment extends BaseFragment {
         txt_visibility.setText(currentWeatherResult.getVisibility()/1000 + " km");
     }
 
+    // Calculate the wind direction by JSON: wind.deg data.
     private String getWindDirection(int deg) {
         String direction = "";
         if (deg == 0 || deg == 360) {
