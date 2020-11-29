@@ -9,7 +9,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Common {
-    public static final String APP_ID = BuildConfig.BUILD_TYPE.;
+    public static final String APP_ID = BuildConfig.API_KEY;
 
     public static final String UNIT_METRIC = "metric";
     public static final String UNIT_IMPERIAL = "imperial";
