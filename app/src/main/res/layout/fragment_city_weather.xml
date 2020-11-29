@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -17,7 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:background="@drawable/bottom_line"
+            android:background="@drawable/bg_bottom_line"
             android:gravity="center_horizontal"
             android:orientation="vertical">
 
@@ -35,7 +33,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:text="Cloudy"
+                android:text="test condition"
                 android:textColor="@color/design_default_color_primary"
                 android:textSize="18sp" />
 
@@ -58,7 +56,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
-                    android:text="-3 ℃"
+                    android:text="-00 ℃"
                     android:textColor="@color/design_default_color_primary"
                     android:textSize="60sp" />
 
@@ -68,14 +66,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_margin="8dp">
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp">
 
                 <TextView
                     android:id="@+id/txt_date_time"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="4"
-                    android:text="Thu, 26 Nov 2020"
+                    android:text="Thu, 26 Nov 1999"
                     android:textColor="@color/design_default_color_primary"
                     android:textSize="18sp" />
 
@@ -84,7 +85,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="15"
+                    android:text="00"
                     android:textAlignment="center"
                     android:textColor="@color/design_default_color_primary"
                     android:textSize="18sp" />
@@ -94,7 +95,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="-5"
+                    android:text="-00"
                     android:textAlignment="center"
                     android:textColor="@color/purple_200"
                     android:textSize="18sp" />
@@ -102,107 +103,24 @@
             </LinearLayout>
 
         </LinearLayout>
+
         <!--        today 24 hours-->
-        <LinearLayout
-            android:id="@+id/layout_hourly"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:background="@drawable/bottom_line"
-            android:orientation="horizontal"
-            android:paddingLeft="4dp"
-            android:paddingRight="4dp">
-
-            <!--item_hours place holder-->
-            <LinearLayout
-                android:layout_width="50dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="4dp"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="11AM"
-                    android:textAlignment="center"
-                    android:textColor="@color/purple_500"
-                    android:textSize="16sp" />
-
-                <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="4dp"
-                    android:layout_marginBottom="4dp"
-                    android:background="@mipmap/ic_launcher" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="10"
-                    android:textAlignment="center"
-                    android:textColor="@color/purple_500"
-                    android:textSize="16sp" />
-
-
-            </LinearLayout>
-
-        </LinearLayout>
+        <fragment
+            android:id="@+id/fragment_hourly_forecast"
+            android:name="com.example.xweather_v2.HourlyForecastFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
         <!--        future general-->
-        <LinearLayout
-            android:id="@+id/layout_daily_general"
+        <fragment
+            android:id="@+id/fragment_daily_forecast"
+            android:name="com.example.xweather_v2.DailyForecastFragment"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:background="@drawable/bottom_line"
-            android:orientation="vertical">
+            android:layout_height="wrap_content" />
 
-            <!--item daily place holder-->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_margin="8dp">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:text="Wed"
-                    android:textColor="@color/design_default_color_primary"
-                    android:textSize="18sp" />
-
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="2"
-                    android:paddingLeft="8dp"
-                    android:paddingRight="8dp"
-                    app:srcCompat="@drawable/ic_launcher_background" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="15"
-                    android:textAlignment="center"
-                    android:textColor="@color/design_default_color_primary"
-                    android:textSize="18sp" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="-5"
-                    android:textAlignment="center"
-                    android:textColor="@color/purple_200"
-                    android:textSize="18sp" />
-
-
-            </LinearLayout>
-
-        </LinearLayout>
         <!--        today detail-->
         <LinearLayout
+            android:background="@drawable/bg_bottom_line"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -212,7 +130,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="24dp"
                 android:layout_marginRight="24dp"
-                android:background="@drawable/bottom_line"
+                android:background="@drawable/bg_bottom_line"
                 android:orientation="horizontal">
 
                 <LinearLayout
@@ -230,7 +148,7 @@
                         android:id="@+id/txt_sunrise"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="07:10"
+                        android:text="00:00"
                         android:textColor="@color/design_default_color_primary"
                         android:textSize="24sp" />
 
@@ -251,7 +169,7 @@
                         android:id="@+id/txt_sunset"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="17:10"
+                        android:text="00:00"
                         android:textColor="@color/design_default_color_primary"
                         android:textSize="24sp" />
 
@@ -263,7 +181,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="24dp"
                 android:layout_marginRight="24dp"
-                android:background="@drawable/bottom_line"
+                android:background="@drawable/bg_bottom_line"
                 android:orientation="horizontal">
 
                 <LinearLayout
@@ -281,7 +199,7 @@
                         android:id="@+id/txt_cloudiness"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="10 %"
+                        android:text="000 %"
                         android:textColor="@color/design_default_color_primary"
                         android:textSize="24sp" />
 
@@ -302,7 +220,7 @@
                         android:id="@+id/txt_humidity"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="33 %"
+                        android:text="000 %"
                         android:textColor="@color/design_default_color_primary"
                         android:textSize="24sp" />
 
@@ -315,7 +233,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="24dp"
                 android:layout_marginRight="24dp"
-                android:background="@drawable/bottom_line"
+                android:background="@drawable/bg_bottom_line"
                 android:orientation="horizontal">
 
                 <LinearLayout
@@ -333,7 +251,7 @@
                         android:id="@+id/txt_wind"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="2 m/s"
+                        android:text="000 m/s"
                         android:textColor="@color/design_default_color_primary"
                         android:textSize="24sp" />
 
@@ -354,7 +272,7 @@
                         android:id="@+id/txt_feelsLike"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="-2 ℃"
+                        android:text="-000 ℃"
                         android:textColor="@color/design_default_color_primary"
                         android:textSize="24sp" />
 
@@ -368,7 +286,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="24dp"
                 android:layout_marginRight="24dp"
-                android:background="@drawable/bottom_line"
                 android:orientation="horizontal">
 
 
@@ -387,7 +304,7 @@
                         android:id="@+id/txt_pressure"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="1009 hPa"
+                        android:text="0000 hPa"
                         android:textColor="@color/design_default_color_primary"
                         android:textSize="24sp" />
 
@@ -408,7 +325,7 @@
                         android:id="@+id/txt_visibility"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="161000 m"
+                        android:text="000000 m"
                         android:textColor="@color/design_default_color_primary"
                         android:textSize="24sp" />
                 </LinearLayout>

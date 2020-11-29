@@ -25,6 +25,7 @@ public class CityWeatherFragment extends BaseFragment {
     TextView txt_city_name, txt_temperature, txt_description, txt_date_time, txt_maxTemp, txt_minTemp,
             txt_sunrise, txt_sunset, txt_wind, txt_feelsLike, txt_pressure, txt_humidity, txt_visibility, txt_cloudiness;
     LinearLayout panel_today_general, panel_today_details;
+    String city_name;
 
     public CityWeatherFragment() {
         // Required empty public constructor
@@ -37,21 +38,20 @@ public class CityWeatherFragment extends BaseFragment {
         View view = inflater.inflate(R.layout.fragment_city_weather, container, false);
         initView(view);
         // GET http request
-        String currentWeatherAPI = "https://api.openweathermap.org/data/2.5/onecall";
+        String currentWeatherAPI = "https://api.openweathermap.org/data/2.5/weather";
         RequestParams params = new RequestParams(currentWeatherAPI);
-        params.addQueryStringParameter("lat", String.valueOf(Common.current_location.getLatitude()));
-        params.addQueryStringParameter("lon", String.valueOf(Common.current_location.getLatitude()));
+
+        Bundle bundle = getArguments();
+        city_name = bundle.getString("city_name");
+        params.addQueryStringParameter("q", city_name);
         params.addQueryStringParameter("appid", Common.APP_ID);
         params.addQueryStringParameter("units", Common.units);
+
         x.http().get(params, this);
 
         return view;
     }
 
-    @Override
-    public void onSuccess(String result) {
-        parseShowData(result);
-    }
 
     @SuppressLint("SetTextI18n")
     private void parseShowData(String result) {
@@ -60,24 +60,47 @@ public class CityWeatherFragment extends BaseFragment {
         OneCallBean oneCallBean = new Gson().fromJson(result, OneCallBean.class);
 
         //        today_general
-        String iconURL = "http://openweathermap.org/img/wn/" + currentWeatherResult.getWeather().get(0).getIcon() + "@2x.png";
+        String iconURL = "https://openweathermap.org/img/wn/" + currentWeatherResult.getWeather().get(0).getIcon() + "@2x.png";
         Picasso.get().load(iconURL).into(img_weather);
         txt_city_name.setText(currentWeatherResult.getName());
-        txt_temperature.setText(currentWeatherResult.getMain().getTemp() + " ℃");
+        txt_temperature.setText(Math.round(currentWeatherResult.getMain().getTemp()) + " ℃");
         txt_description.setText(currentWeatherResult.getWeather().get(0).getDescription());
         txt_date_time.setText(Common.convertUnixToDate(currentWeatherResult.getDt()));
-        txt_maxTemp.setText(currentWeatherResult.getMain().getTemp_max() + "");
-        txt_minTemp.setText(currentWeatherResult.getMain().getTemp_min() + "");
+        txt_maxTemp.setText(Math.round(currentWeatherResult.getMain().getTemp_max()) + "");
+        txt_minTemp.setText(Math.round(currentWeatherResult.getMain().getTemp_min()) + "");
 
-        //        today_details
+
         txt_sunrise.setText(Common.convertUnixToHour(currentWeatherResult.getSys().getSunrise()));
         txt_sunset.setText(Common.convertUnixToHour(currentWeatherResult.getSys().getSunset()));
-        txt_cloudiness.setText(currentWeatherResult.getClouds().getAll());
-        txt_wind.setText(currentWeatherResult.getWind().getSpeed() + " m/s");
-        txt_feelsLike.setText(currentWeatherResult.getMain().getFeels_like() + " ℃");
+        txt_cloudiness.setText(currentWeatherResult.getClouds().getAll() + " %");
+        txt_wind.setText(getWindDirection(currentWeatherResult.getWind().getDeg()) + " " + currentWeatherResult.getWind().getSpeed() + " m/s");
+        txt_feelsLike.setText(Math.round(currentWeatherResult.getMain().getFeels_like()) + " ℃");
         txt_pressure.setText(currentWeatherResult.getMain().getPressure() + " hPa");
         txt_humidity.setText(currentWeatherResult.getMain().getHumidity() + " %");
-        txt_visibility.setText(currentWeatherResult.getVisibility() + "m");
+        txt_visibility.setText(currentWeatherResult.getVisibility()/1000 + " km");
+    }
+
+    private String getWindDirection(int deg) {
+        String direction = "";
+        if (deg == 0 || deg == 360) {
+            direction = "N";
+        } else if (deg == 90) {
+            direction = "E";
+        } else if (deg == 180) {
+            direction = "S";
+        } else if (deg == 270) {
+            direction = "W";
+        } else if (deg > 0 && deg < 90) {
+            direction = "NE";
+        } else if (deg > 90 && deg < 180) {
+            direction = "SE";
+        } else if (deg > 180 && deg < 270) {
+            direction = "SW";
+        } else if (deg > 270 && deg < 360) {
+            direction = "NW";
+        }
+
+        return direction;
     }
 
 
@@ -100,4 +123,15 @@ public class CityWeatherFragment extends BaseFragment {
         txt_humidity = (TextView) view.findViewById(R.id.txt_humidity);
         txt_visibility = (TextView) view.findViewById(R.id.txt_visibility);
     }
+
+    @Override
+    public void onSuccess(String result) {
+        parseShowData(result);
+    }
+
+    @Override
+    public void onError(Throwable ex, boolean isOnCallback) {
+        System.out.println("xutils3 error: " + ex.getMessage());
+    }
+
 }

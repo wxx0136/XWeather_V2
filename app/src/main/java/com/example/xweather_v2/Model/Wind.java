@@ -3,7 +3,7 @@ package com.example.xweather_v2.Model;
 public class Wind {
     private double speed;
     private int deg;
-    private double gust;
+
 
     public double getSpeed() {
         return speed;
@@ -21,11 +21,4 @@ public class Wind {
         this.deg = deg;
     }
 
-    public double getGust() {
-        return gust;
-    }
-
-    public void setGust(double gust) {
-        this.gust = gust;
-    }
 }
