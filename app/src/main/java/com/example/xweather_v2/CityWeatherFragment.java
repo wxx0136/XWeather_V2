@@ -43,7 +43,7 @@ public class CityWeatherFragment extends BaseFragment {
         Bundle bundle = getArguments();
         city_name = bundle.getString("city_name");
         params.addQueryStringParameter("q", city_name);
-        params.addQueryStringParameter("appid", Common.APP_ID);
+        params.addQueryStringParameter("appid", BuildConfig.OWM_API_KEY);
         params.addQueryStringParameter("units", Common.units);
 
         x.http().get(params, this);

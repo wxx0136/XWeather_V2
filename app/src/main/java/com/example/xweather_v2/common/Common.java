@@ -3,14 +3,10 @@ package com.example.xweather_v2.common;
 import android.annotation.SuppressLint;
 import android.location.Location;
 
-import com.example.xweather_v2.BuildConfig;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Common {
-    public static final String APP_ID = BuildConfig.API_KEY;
-
     public static final String UNIT_METRIC = "metric";
     public static final String UNIT_IMPERIAL = "imperial";
 
@@ -35,7 +31,7 @@ public class Common {
         return simpleDateFormat.format(date);
     }
 
-    public static Location getLocationByCityName(String city_name){
+    public static Location getLocationByCityName(String city_name) {
         return null;
     }
 
