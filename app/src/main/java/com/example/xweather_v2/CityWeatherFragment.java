@@ -10,9 +10,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.xweather_v2.base.BaseFragment;
-import com.example.xweather_v2.common.Common;
 import com.example.xweather_v2.bean.CurrentWeatherBean;
-import com.example.xweather_v2.bean.OneCallBean;
+import com.example.xweather_v2.common.Common;
 import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
@@ -57,7 +56,6 @@ public class CityWeatherFragment extends BaseFragment {
     private void parseShowData(String result) {
         //        使用Gson解析数据
         CurrentWeatherBean currentWeatherBean = new Gson().fromJson(result, CurrentWeatherBean.class);
-        OneCallBean oneCallBean = new Gson().fromJson(result, OneCallBean.class);
 
         //        today_general
         String iconURL = "https://openweathermap.org/img/wn/" + currentWeatherBean.getWeather().get(0).getIcon() + "@2x.png";

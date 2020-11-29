@@ -3,11 +3,13 @@ package com.example.xweather_v2.common;
 import android.annotation.SuppressLint;
 import android.location.Location;
 
+import com.example.xweather_v2.BuildConfig;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Common {
-    public static final String APP_ID = "c86e7feaf57899bbd3e116870f278257";
+    public static final String APP_ID = BuildConfig.BUILD_TYPE.;
 
     public static final String UNIT_METRIC = "metric";
     public static final String UNIT_IMPERIAL = "imperial";
