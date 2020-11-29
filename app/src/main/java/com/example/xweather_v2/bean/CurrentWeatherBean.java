@@ -1,22 +1,23 @@
-package com.example.xweather_v2.Model;
+package com.example.xweather_v2.bean;
 
 import java.util.List;
 
 public class CurrentWeatherBean {
 
+
     /**
-     * coord : {"lon":139,"lat":35}
+     * coord : {"lon":-97.15,"lat":49.88}
      * weather : [{"id":804,"main":"Clouds","description":"overcast clouds","icon":"04n"}]
      * base : stations
-     * main : {"temp":283.15,"feels_like":280.91,"temp_min":283.15,"temp_max":283.15,"pressure":1014,"humidity":59}
+     * main : {"temp":271.6,"feels_like":267.68,"temp_min":271.15,"temp_max":272.15,"pressure":1017,"humidity":86,"sea_level":1017,"grnd_level":988}
      * visibility : 10000
-     * wind : {"speed":0.89,"deg":28,"gust":0.89}
-     * clouds : {"all":88}
-     * dt : 1606551451
-     * sys : {"type":3,"id":2019346,"country":"JP","sunrise":1606512664,"sunset":1606548794}
-     * timezone : 32400
-     * id : 1851632
-     * name : Shuzenji
+     * wind : {"speed":2.1,"deg":300}
+     * clouds : {"all":100}
+     * dt : 1606632336
+     * sys : {"type":1,"id":738,"country":"CA","sunrise":1606658590,"sunset":1606689089}
+     * timezone : -21600
+     * id : 6183235
+     * name : Winnipeg
      * cod : 200
      */
 
@@ -140,8 +141,8 @@ public class CurrentWeatherBean {
 
     public static class CoordBean {
         /**
-         * lon : 139
-         * lat : 35
+         * lon : -97.15
+         * lat : 49.88
          */
 
         private double lon;
@@ -166,12 +167,14 @@ public class CurrentWeatherBean {
 
     public static class MainBean {
         /**
-         * temp : 283.15
-         * feels_like : 280.91
-         * temp_min : 283.15
-         * temp_max : 283.15
-         * pressure : 1014
-         * humidity : 59
+         * temp : 271.6
+         * feels_like : 267.68
+         * temp_min : 271.15
+         * temp_max : 272.15
+         * pressure : 1017
+         * humidity : 86
+         * sea_level : 1017
+         * grnd_level : 988
          */
 
         private double temp;
@@ -180,6 +183,8 @@ public class CurrentWeatherBean {
         private double temp_max;
         private int pressure;
         private int humidity;
+        private int sea_level;
+        private int grnd_level;
 
         public double getTemp() {
             return temp;
@@ -228,18 +233,32 @@ public class CurrentWeatherBean {
         public void setHumidity(int humidity) {
             this.humidity = humidity;
         }
+
+        public int getSea_level() {
+            return sea_level;
+        }
+
+        public void setSea_level(int sea_level) {
+            this.sea_level = sea_level;
+        }
+
+        public int getGrnd_level() {
+            return grnd_level;
+        }
+
+        public void setGrnd_level(int grnd_level) {
+            this.grnd_level = grnd_level;
+        }
     }
 
     public static class WindBean {
         /**
-         * speed : 0.89
-         * deg : 28
-         * gust : 0.89
+         * speed : 2.1
+         * deg : 300
          */
 
         private double speed;
         private int deg;
-        private double gust;
 
         public double getSpeed() {
             return speed;
@@ -256,19 +275,11 @@ public class CurrentWeatherBean {
         public void setDeg(int deg) {
             this.deg = deg;
         }
-
-        public double getGust() {
-            return gust;
-        }
-
-        public void setGust(double gust) {
-            this.gust = gust;
-        }
     }
 
     public static class CloudsBean {
         /**
-         * all : 88
+         * all : 100
          */
 
         private int all;
@@ -284,11 +295,11 @@ public class CurrentWeatherBean {
 
     public static class SysBean {
         /**
-         * type : 3
-         * id : 2019346
-         * country : JP
-         * sunrise : 1606512664
-         * sunset : 1606548794
+         * type : 1
+         * id : 738
+         * country : CA
+         * sunrise : 1606658590
+         * sunset : 1606689089
          */
 
         private int type;

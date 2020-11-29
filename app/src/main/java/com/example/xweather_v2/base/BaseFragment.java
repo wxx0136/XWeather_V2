@@ -1,4 +1,4 @@
-package com.example.xweather_v2.Base;
+package com.example.xweather_v2.base;
 
 import androidx.fragment.app.Fragment;
 

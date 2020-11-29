@@ -9,10 +9,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.xweather_v2.Base.BaseFragment;
-import com.example.xweather_v2.Common.Common;
-import com.example.xweather_v2.Model.CurrentWeatherResult;
-import com.example.xweather_v2.Model.OneCallBean;
+import com.example.xweather_v2.base.BaseFragment;
+import com.example.xweather_v2.common.Common;
+import com.example.xweather_v2.bean.CurrentWeatherBean;
+import com.example.xweather_v2.bean.OneCallBean;
 import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
@@ -56,28 +56,28 @@ public class CityWeatherFragment extends BaseFragment {
     @SuppressLint("SetTextI18n")
     private void parseShowData(String result) {
         //        使用Gson解析数据
-        CurrentWeatherResult currentWeatherResult = new Gson().fromJson(result, CurrentWeatherResult.class);
+        CurrentWeatherBean currentWeatherBean = new Gson().fromJson(result, CurrentWeatherBean.class);
         OneCallBean oneCallBean = new Gson().fromJson(result, OneCallBean.class);
 
         //        today_general
-        String iconURL = "https://openweathermap.org/img/wn/" + currentWeatherResult.getWeather().get(0).getIcon() + "@2x.png";
+        String iconURL = "https://openweathermap.org/img/wn/" + currentWeatherBean.getWeather().get(0).getIcon() + "@2x.png";
         Picasso.get().load(iconURL).into(img_weather);
-        txt_city_name.setText(currentWeatherResult.getName());
-        txt_temperature.setText(Math.round(currentWeatherResult.getMain().getTemp()) + " ℃");
-        txt_description.setText(currentWeatherResult.getWeather().get(0).getDescription());
-        txt_date_time.setText(Common.convertUnixToDate(currentWeatherResult.getDt()));
-        txt_maxTemp.setText(Math.round(currentWeatherResult.getMain().getTemp_max()) + "");
-        txt_minTemp.setText(Math.round(currentWeatherResult.getMain().getTemp_min()) + "");
+        txt_city_name.setText(currentWeatherBean.getName());
+        txt_temperature.setText(Math.round(currentWeatherBean.getMain().getTemp()) + " ℃");
+        txt_description.setText(currentWeatherBean.getWeather().get(0).getDescription());
+        txt_date_time.setText(Common.convertUnixToDate(currentWeatherBean.getDt()));
+        txt_maxTemp.setText(Math.round(currentWeatherBean.getMain().getTemp_max()) + "");
+        txt_minTemp.setText(Math.round(currentWeatherBean.getMain().getTemp_min()) + "");
 
 
-        txt_sunrise.setText(Common.convertUnixToHour(currentWeatherResult.getSys().getSunrise()));
-        txt_sunset.setText(Common.convertUnixToHour(currentWeatherResult.getSys().getSunset()));
-        txt_cloudiness.setText(currentWeatherResult.getClouds().getAll() + " %");
-        txt_wind.setText(getWindDirection(currentWeatherResult.getWind().getDeg()) + " " + currentWeatherResult.getWind().getSpeed() + " m/s");
-        txt_feelsLike.setText(Math.round(currentWeatherResult.getMain().getFeels_like()) + " ℃");
-        txt_pressure.setText(currentWeatherResult.getMain().getPressure() + " hPa");
-        txt_humidity.setText(currentWeatherResult.getMain().getHumidity() + " %");
-        txt_visibility.setText(currentWeatherResult.getVisibility()/1000 + " km");
+        txt_sunrise.setText(Common.convertUnixToHour(currentWeatherBean.getSys().getSunrise()));
+        txt_sunset.setText(Common.convertUnixToHour(currentWeatherBean.getSys().getSunset()));
+        txt_cloudiness.setText(currentWeatherBean.getClouds().getAll() + " %");
+        txt_wind.setText(getWindDirection(currentWeatherBean.getWind().getDeg()) + " " + currentWeatherBean.getWind().getSpeed() + " m/s");
+        txt_feelsLike.setText(Math.round(currentWeatherBean.getMain().getFeels_like()) + " ℃");
+        txt_pressure.setText(currentWeatherBean.getMain().getPressure() + " hPa");
+        txt_humidity.setText(currentWeatherBean.getMain().getHumidity() + " %");
+        txt_visibility.setText(currentWeatherBean.getVisibility()/1000 + " km");
     }
 
     // Calculate the wind direction by JSON: wind.deg data.

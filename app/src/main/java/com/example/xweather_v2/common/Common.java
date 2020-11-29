@@ -1,4 +1,4 @@
-package com.example.xweather_v2.Common;
+package com.example.xweather_v2.common;
 
 import android.annotation.SuppressLint;
 import android.location.Location;
