@@ -8,15 +8,14 @@
     <RelativeLayout
         android:id="@+id/city_top_panel"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="50dp"
         android:background="@color/purple_700">
 
         <ImageView
             android:id="@+id/image_back"
-            android:layout_width="60dp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:padding="10dp"
-            android:src="@drawable/ic_launcher_background"
             app:srcCompat="@drawable/abc_vector_test" />
 
         <TextView
@@ -29,30 +28,34 @@
             android:textSize="18sp" />
 
         <ImageView
-            android:id="@+id/image_edit"
-            android:layout_width="60dp"
+            android:id="@+id/image_delete"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignParentEnd="true"
             android:padding="10dp"
-            app:srcCompat="@android:drawable/ic_menu_edit" />
+            app:srcCompat="@android:drawable/ic_menu_delete" />
     </RelativeLayout>
+
 
     <ListView
         android:id="@+id/list_city"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/city_top_panel"
-        android:divider="null" />
+        android:divider="@color/white" />
+
 
     <ImageView
         android:id="@+id/image_add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/list_city"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_margin="8dp"
-        android:src="ic_men"
-        app:srcCompat="@android:drawable/ic_menu_add" />
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        app:srcCompat="@android:drawable/ic_menu_search" />
 
 
 </RelativeLayout>

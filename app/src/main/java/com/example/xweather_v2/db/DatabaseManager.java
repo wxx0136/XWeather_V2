@@ -55,4 +55,25 @@ public class DatabaseManager {
         return null;
     }
 
+    // The weather favorites max number is 10 (iOS 14 weather App max number is 20)
+    public static int getCityCount() {
+        @SuppressLint("Recycle") Cursor cursor = database.query("info", null, null, null, null, null, null);
+        return cursor.getCount();
+    }
+
+    // Fetch all information from the database
+    public static List<DatabaseBean> queryAllInfo() {
+        Cursor cursor = database.query("info", null, null, null, null, null, null);
+        List<DatabaseBean> databaseBeanList = new ArrayList<>();
+        while (cursor.moveToNext()) {
+            int id = cursor.getInt(cursor.getColumnIndex("_id"));
+            String city = cursor.getString(cursor.getColumnIndex("city"));
+            String content = cursor.getString(cursor.getColumnIndex("content"));
+            DatabaseBean bean = new DatabaseBean(id, city, content);
+            databaseBeanList.add(bean);
+        }
+        return databaseBeanList;
+    }
+
+
 }

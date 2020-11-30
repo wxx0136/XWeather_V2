@@ -53,6 +53,9 @@ dependencies {
     implementation 'org.xutils:xutils:3.7.6'
     //CardView
     implementation 'androidx.cardview:cardview:1.0.0'
+    //async tool
+    implementation 'com.label305:asynctask:1.0.0'
+
 
 
 }

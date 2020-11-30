@@ -1,4 +1,4 @@
-package com.example.xweather_v2;
+package com.example.xweather_v2.today_weather;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -10,6 +10,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.xweather_v2.BuildConfig;
+import com.example.xweather_v2.R;
 import com.example.xweather_v2.base.BaseFragment;
 import com.example.xweather_v2.bean.CurrentWeatherBean;
 import com.example.xweather_v2.common.Common;

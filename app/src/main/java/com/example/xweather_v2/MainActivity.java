@@ -11,7 +11,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
+import com.example.xweather_v2.city_manager.CityManagerActivity;
 import com.example.xweather_v2.db.DatabaseManager;
+import com.example.xweather_v2.today_weather.CityFragmentPagerAdapter;
+import com.example.xweather_v2.today_weather.CityWeatherFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +49,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         imageViewList = new ArrayList<>();
         if (cityList.size() == 0) {
             cityList.add("Winnipeg");
+            cityList.add("Toronto");
         }
 
         initPager(); // Init View Pager
@@ -104,7 +108,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Intent intent = new Intent();
         switch (view.getId()) {
             case R.id.main_img_add_city:
-                intent.setClass(this,CityManagerActivity.class);
+                intent.setClass(this, CityManagerActivity.class);
                 break;
             case R.id.main_img_more:
 //                intent.setClass(this,MoreActivity.class);

@@ -1,4 +1,4 @@
-package com.example.xweather_v2;
+package com.example.xweather_v2.today_weather;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
