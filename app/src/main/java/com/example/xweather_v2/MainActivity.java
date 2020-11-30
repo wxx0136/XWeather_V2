@@ -11,6 +11,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
+import com.example.xweather_v2.db.DatabaseManager;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,15 +42,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         main_img_more.setOnClickListener(this);
 
         fragmentList = new ArrayList<>();
-        cityList = new ArrayList<>();
+        cityList = DatabaseManager.queryAllCityName(); // Get the city list in the database
         imageViewList = new ArrayList<>();
         if (cityList.size() == 0) {
-            cityList.add("Toronto");
-            cityList.add("Montreal");
-            cityList.add("Calgary");
-            cityList.add("Ottawa");
-            cityList.add("Edmonton");
-            cityList.add("Mississauga");
             cityList.add("Winnipeg");
         }
 
@@ -108,7 +104,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Intent intent = new Intent();
         switch (view.getId()) {
             case R.id.main_img_add_city:
-//                intent.setClass(this,CityManagerActivity.class);
+                intent.setClass(this,CityManagerActivity.class);
                 break;
             case R.id.main_img_more:
 //                intent.setClass(this,MoreActivity.class);
