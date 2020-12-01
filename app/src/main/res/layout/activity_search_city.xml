@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".city_manager.SearchCityActivity">
+
+    <RelativeLayout
+        android:id="@+id/search_panel"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/purple_700">
+
+        <ImageView
+            android:id="@+id/image_back"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:padding="10dp"
+            app:srcCompat="@drawable/abc_vector_test" />
+
+        <SearchView
+            android:queryBackground="@null"
+            android:searchIcon="@null"
+            android:textAlignment="center"
+            android:id="@+id/searchView_bar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toEndOf="@id/image_back"
+            android:iconifiedByDefault="false" />
+    </RelativeLayout>
+
+    <ListView
+        android:layout_below="@+id/search_panel"
+        android:id="@+id/listView_city_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="16dp" />
+
+</RelativeLayout>

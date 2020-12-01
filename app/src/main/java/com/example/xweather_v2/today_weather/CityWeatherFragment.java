@@ -1,7 +1,8 @@
-package com.example.xweather_v2;
+package com.example.xweather_v2.today_weather;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,9 +10,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.xweather_v2.BuildConfig;
+import com.example.xweather_v2.R;
 import com.example.xweather_v2.base.BaseFragment;
 import com.example.xweather_v2.bean.CurrentWeatherBean;
 import com.example.xweather_v2.common.Common;
+import com.example.xweather_v2.db.DatabaseManager;
 import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
@@ -75,7 +79,7 @@ public class CityWeatherFragment extends BaseFragment {
         txt_feelsLike.setText(Math.round(currentWeatherBean.getMain().getFeels_like()) + " ℃");
         txt_pressure.setText(currentWeatherBean.getMain().getPressure() + " hPa");
         txt_humidity.setText(currentWeatherBean.getMain().getHumidity() + " %");
-        txt_visibility.setText(currentWeatherBean.getVisibility()/1000 + " km");
+        txt_visibility.setText(currentWeatherBean.getVisibility() / 1000 + " km");
     }
 
     // Calculate the wind direction by JSON: wind.deg data.
@@ -126,11 +130,21 @@ public class CityWeatherFragment extends BaseFragment {
     @Override
     public void onSuccess(String result) {
         parseShowData(result);
+//        Update the database
+        int feedbackInfo = DatabaseManager.updateInfoByCity(city_name, result);
+        if (feedbackInfo <= 0) {
+            // update failed, that mean there is no this city name in the database
+            DatabaseManager.addCityInfo(city_name, result);
+        }
     }
 
     @Override
     public void onError(Throwable ex, boolean isOnCallback) {
-        System.out.println("xutils3 error: " + ex.getMessage());
+        // Find the weather information from the database
+        String content = DatabaseManager.queryInfoByCity(city_name);
+        if (!TextUtils.isEmpty(content)) {
+            parseShowData(content);
+        }
     }
 
 }
