@@ -2,6 +2,7 @@ package com.example.xweather_v2.city_manager;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -49,6 +50,7 @@ public class SearchCityActivity extends AppCompatActivity implements View.OnClic
     // Change the color to white.
     private void initSearchViewStyle(SearchView searchView) {
         searchView.setQueryHint("Input a city...");
+        listView_city_list.setVisibility(View.GONE);
 
         int id_search_src_text = searchView.getContext().getResources().getIdentifier("android:id/search_src_text", null, null);
         TextView textView = (TextView) searchView.findViewById(id_search_src_text);
@@ -73,6 +75,8 @@ public class SearchCityActivity extends AppCompatActivity implements View.OnClic
         }
     }
 
+
+
     private void initAdapterForListView() {
         if (MainActivity.cityListBeanList.isEmpty())
             throw new NullPointerException("MainActivity.cityListBeanList is empty.");
@@ -96,10 +100,17 @@ public class SearchCityActivity extends AppCompatActivity implements View.OnClic
 
             @Override
             public boolean onQueryTextChange(String newText) {
-
                 adapter.getFilter().filter(newText);
 
-                return false;
+                // Hide the listView when no input.
+                if(TextUtils.isEmpty(newText)){
+                    listView_city_list.setVisibility(View.GONE);
+                }
+                else {
+                    listView_city_list.setVisibility(View.VISIBLE);
+                }
+
+                return true;
             }
         });
 
