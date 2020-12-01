@@ -4,7 +4,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".city_manager.SearchCityActivity">
+    tools:context=".city_manager.SearchCityActivity"
+    android:orientation="vertical"
+    >
+
+    <SearchView
+        android:paddingEnd="16dp"
+        android:iconifiedByDefault="false"
+        android:id="@+id/searchView_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </SearchView>
+    <ListView
+        android:paddingStart="16dp"
+        android:id="@+id/listView_city_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
 
 

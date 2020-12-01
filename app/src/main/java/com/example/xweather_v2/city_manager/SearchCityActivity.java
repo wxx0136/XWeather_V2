@@ -2,11 +2,16 @@ package com.example.xweather_v2.city_manager;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.SearchView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.xweather_v2.R;
-import com.example.xweather_v2.bean.CityWithCoordBean;
+import com.example.xweather_v2.bean.CityListBean;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.label305.asynctask.SimpleAsyncTask;
@@ -15,12 +20,20 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.zip.GZIPInputStream;
 
 public class SearchCityActivity extends AppCompatActivity {
 
-    private List<CityWithCoordBean> cityWithCoordBeanList;
+    private List<CityListBean> cityListBeanList;
+    private CityListBean searchResult;
+
+    SearchView searchView_bar;
+    ListView listView_city_list;
+
+    ArrayAdapter<String> adapter;
+    List<String> allCityList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,13 +41,34 @@ public class SearchCityActivity extends AppCompatActivity {
         setContentView(R.layout.activity_search_city);
 
         new loadCities().execute();
+        searchView_bar = (SearchView) findViewById(R.id.searchView_bar);
+        listView_city_list = (ListView) findViewById(R.id.listView_city_list);
+
+        searchView_bar.setQueryHint("Preparing...");
+        enableSearchView(searchView_bar, false);
+
+        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, allCityList);
+        listView_city_list.setAdapter(adapter);
+
 
     }
 
-    private class loadCities extends SimpleAsyncTask<List<CityWithCoordBean>> {
+    // Because SearchView is a ViewGroup, so we have to disable all its child views.
+    private void enableSearchView(View view, boolean enabled) {
+        view.setEnabled(enabled);
+        if (view instanceof ViewGroup) {
+            ViewGroup viewGroup = (ViewGroup) view;
+            for (int i = 0; i < viewGroup.getChildCount(); i++) {
+                View child = viewGroup.getChildAt(i);
+                enableSearchView(child, enabled);
+            }
+        }
+    }
+
+    private class loadCities extends SimpleAsyncTask<List<CityListBean>> {
 
         @Override
-        protected List<CityWithCoordBean> doInBackgroundSimple() {
+        protected List<CityListBean> doInBackgroundSimple() {
             try {
                 StringBuilder builder = new StringBuilder();
                 InputStream is = getResources().openRawResource(R.raw.city_list);
@@ -60,28 +94,47 @@ public class SearchCityActivity extends AppCompatActivity {
 //                },
 //                ]
 
-                cityWithCoordBeanList = new Gson().fromJson(builder.toString(), new TypeToken<List<CityWithCoordBean>>() {
+                cityListBeanList = new Gson().fromJson(builder.toString(), new TypeToken<List<CityListBean>>() {
                 }.getType());
 
                 Log.d("city_list", builder.toString());
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            return cityWithCoordBeanList;
+            return cityListBeanList;
         }
 
         @Override
-        protected void onSuccess(List<CityWithCoordBean> city_list) {
-            super.onSuccess(city_list);
+        protected void onSuccess(List<CityListBean> beanList) {
+//            super.onSuccess(beanList);
 
-            for (CityWithCoordBean bean : city_list) {
-                if (bean.getName().equals("Winnipeg")) {
-                    System.out.println(bean.getCoord().getLat() + ", " + bean.getCoord().getLon());
-                }
+            for (CityListBean bean : beanList) {
+                adapter.add(bean.getName() + ", " + bean.getCountry());
             }
+
+
+            // Allow input the text into the search view to do the query
+            searchView_bar.setQueryHint("Input a city...");
+            enableSearchView(searchView_bar, true);
+
+            searchView_bar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextSubmit(String query) {
+                    return false;
+                }
+
+                @Override
+                public boolean onQueryTextChange(String newText) {
+
+
+                    adapter.getFilter().filter(newText);
+
+                    return false;
+                }
+            });
+
         }
 
     }
-
 
 }

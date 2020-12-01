@@ -1,6 +1,6 @@
 package com.example.xweather_v2.bean;
 
-public class CityWithCoordBean {
+public class CityListBean {
 
     /**
      * id : 833

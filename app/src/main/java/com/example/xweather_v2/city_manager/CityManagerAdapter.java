@@ -72,7 +72,7 @@ public class CityManagerAdapter extends BaseAdapter {
         return convertView;
     }
 
-    class ViewHolder {
+    private static class ViewHolder {
         TextView txt_city_name, txt_temperature;
         ImageView image_weather;
 
