@@ -1,7 +1,6 @@
 package com.example.xweather_v2.common;
 
 import android.annotation.SuppressLint;
-import android.location.Location;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -10,7 +9,6 @@ public class Common {
     public static final String UNIT_METRIC = "metric";
     public static final String UNIT_IMPERIAL = "imperial";
 
-    public static Location current_location = null;
     public static String units = UNIT_METRIC;
 
     public static String convertUnixToDate(long dt) {
@@ -29,10 +27,6 @@ public class Common {
         Date date = new Date(sunrise * 1000L);
         @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
         return simpleDateFormat.format(date);
-    }
-
-    public static Location getLocationByCityName(String city_name) {
-        return null;
     }
 
     public void setUnits(String units) {

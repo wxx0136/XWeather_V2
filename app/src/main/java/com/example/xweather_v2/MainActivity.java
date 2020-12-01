@@ -35,6 +35,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     LinearLayout main_layout_point;
     ViewPager main_vp;
 
+    // Because using the free api, I can't get the Coord with the city name at the same time.
+    String mockCurrentCityJson = "{\"id\":6183235,\"name\":\"Winnipeg\",\"state\":\"\",\"country\":\"CA\",\"coord\":{\"lon\":-97.147041,\"lat\":49.884399}}";
+
     List<Fragment> fragmentList; // Data source of the View Pager
     List<String> cityList;
     List<ImageView> imageViewList;
