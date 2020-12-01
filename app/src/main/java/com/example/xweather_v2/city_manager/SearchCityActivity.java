@@ -18,17 +18,17 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.xweather_v2.MainActivity;
 import com.example.xweather_v2.R;
-import com.example.xweather_v2.bean.CityListBean;
+import com.example.xweather_v2.bean.CityBean;
 
 public class SearchCityActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private CityListBean searchResult;
+    private CityBean searchResult;
     ImageView image_back;
 
     SearchView searchView_bar;
     ListView listView_city_list;
 
-    ArrayAdapter<CityListBean> adapter;
+    ArrayAdapter<CityBean> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,12 +75,12 @@ public class SearchCityActivity extends AppCompatActivity implements View.OnClic
     }
 
     private void initAdapterForListView() {
-        if (MainActivity.cityListBeanList.isEmpty())
+        if (MainActivity.cityListBean.isEmpty())
             throw new NullPointerException("MainActivity.cityListBeanList is empty.");
 
         enableSearchView(searchView_bar, true);
 
-        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, MainActivity.cityListBeanList);
+        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, MainActivity.cityListBean);
         listView_city_list.setAdapter(adapter);
 
         // Allow input the text into the search view to do the query
@@ -109,16 +109,15 @@ public class SearchCityActivity extends AppCompatActivity implements View.OnClic
         listView_city_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                for (CityListBean bean : MainActivity.cityListBeanList) {
+                for (CityBean bean : MainActivity.cityListBean) {
                     if (adapter.getItem(position) == bean) {
                         Log.d("xwei", bean.getId() + ", " + bean.getName() + ", " + bean.getState() + ", " + bean.getCountry() + "," + bean.getCoord().getLat() + ", " + bean.getCoord().getLon());
-                        try {
-                            Intent intent = new Intent(SearchCityActivity.this, CityManagerActivity.class);
-                            intent.putExtra("cityBean", bean);
-//                            startActivity(intent);
-                        } catch (Exception exception) {
-                            Log.d("xwei", exception.toString());
-                        }
+                        Intent intent = new Intent(SearchCityActivity.this, MainActivity.class);
+                        intent.putExtra("cityBean", bean);
+                        startActivity(intent);
+                        // 通过JSON文件获取城市的id, cityName和座标（这些值也是one Call API 获取不到的），然后把这些值返回给
+                        // MainActivity。MainActiviy先读取这个值，加入其列表中，然后销毁activity，再重新生成。生成的过程中，CityFragment
+                        // 就可以根据MainActivity已读到的值来生成Fragment，并放在View Pager中。
 
                     }
                 }

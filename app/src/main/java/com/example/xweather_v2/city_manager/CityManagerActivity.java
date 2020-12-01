@@ -10,6 +10,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.xweather_v2.R;
+import com.example.xweather_v2.bean.CityBean;
 import com.example.xweather_v2.db.DatabaseBean;
 import com.example.xweather_v2.db.DatabaseManager;
 
@@ -22,6 +23,8 @@ public class CityManagerActivity extends AppCompatActivity implements View.OnCli
     ListView list_city;
     List<DatabaseBean> mDatas;
     CityManagerAdapter cityManagerAdapter;
+
+    private CityBean cityBean;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,11 +50,15 @@ public class CityManagerActivity extends AppCompatActivity implements View.OnCli
     @Override
     protected void onResume() {
         super.onResume();
+        cityBean = (CityBean) getIntent().getSerializableExtra("cityBean"); // Get the new city from SearchCityActivity.
+
         // Get the real-time info from the database, add them into the memory(Bean/Result), and notify the adapter to renew.
         List<DatabaseBean> list = DatabaseManager.queryAllInfo();
         mDatas.clear();
         mDatas.addAll(list);
         cityManagerAdapter.notifyDataSetChanged();
+
+
     }
 
     @Override

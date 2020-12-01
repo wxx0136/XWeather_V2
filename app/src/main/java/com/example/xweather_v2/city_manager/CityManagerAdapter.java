@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.xweather_v2.R;
-import com.example.xweather_v2.bean.CurrentWeatherBean;
+import com.example.xweather_v2.bean.OneCallBean;
 import com.example.xweather_v2.db.DatabaseBean;
 import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
@@ -62,12 +62,11 @@ public class CityManagerAdapter extends BaseAdapter {
         DatabaseBean bean = mDatas.get(position);
         holder.txt_city_name.setText(bean.getCity());
         // Parse Json to get the current weather of the cities.
-        CurrentWeatherBean currentWeatherBean = new Gson().fromJson(bean.getContent(), CurrentWeatherBean.class);
+        OneCallBean oneCallBean = new Gson().fromJson(bean.getContent(), OneCallBean.class);
 
-        holder.txt_city_name.setText(currentWeatherBean.getName());
-        String iconURL = "https://openweathermap.org/img/wn/" + currentWeatherBean.getWeather().get(0).getIcon() + "@2x.png";
+        String iconURL = "https://openweathermap.org/img/wn/" + oneCallBean.getCurrent().getWeather().get(0).getIcon() + "@2x.png";
         Picasso.get().load(iconURL).into(holder.image_weather);
-        holder.txt_temperature.setText(Math.round(currentWeatherBean.getMain().getTemp()) + " ℃");
+        holder.txt_temperature.setText(Math.round(oneCallBean.getCurrent().getTemp()) + " ℃");
 
         return convertView;
     }

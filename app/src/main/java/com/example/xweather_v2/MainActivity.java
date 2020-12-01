@@ -12,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
-import com.example.xweather_v2.bean.CityListBean;
+import com.example.xweather_v2.bean.CityBean;
 import com.example.xweather_v2.city_manager.CityManagerActivity;
 import com.example.xweather_v2.db.DatabaseManager;
 import com.example.xweather_v2.today_weather.CityFragmentPagerAdapter;
@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     List<ImageView> imageViewList;
     private CityFragmentPagerAdapter adapter;
 
-    public static List<CityListBean> cityListBeanList;
+    public static List<CityBean> cityListBean;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -137,10 +137,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     //  Get the city list for other activity to use later.
-    private class loadCities extends SimpleAsyncTask<List<CityListBean>> {
+    private class loadCities extends SimpleAsyncTask<List<CityBean>> {
 
         @Override
-        protected List<CityListBean> doInBackgroundSimple() {
+        protected List<CityBean> doInBackgroundSimple() {
             try {
                 StringBuilder builder = new StringBuilder();
                 InputStream is = getResources().openRawResource(R.raw.city_list);
@@ -166,18 +166,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //                },
 //                ]
 
-                cityListBeanList = new Gson().fromJson(builder.toString(), new TypeToken<List<CityListBean>>() {
+                cityListBean = new Gson().fromJson(builder.toString(), new TypeToken<List<CityBean>>() {
                 }.getType());
 
                 Log.d("city_list", builder.toString());
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            return cityListBeanList;
+            return cityListBean;
         }
 
         @Override
-        protected void onSuccess(List<CityListBean> beanList) {
+        protected void onSuccess(List<CityBean> beanList) {
             super.onSuccess(beanList);
 
         }

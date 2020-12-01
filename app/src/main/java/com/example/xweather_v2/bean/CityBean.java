@@ -5,7 +5,7 @@ import org.jetbrains.annotations.NotNull;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class CityListBean implements Serializable {
+public class CityBean implements Serializable {
 
     /**
      * id : 833
