@@ -81,6 +81,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // Create Fragment objects, add them to the view pager data source.
         for (int i = 0; i < cityList.size(); i++) {
             CityWeatherFragment cityWeatherFragment = new CityWeatherFragment();
+
             Bundle bundle = new Bundle();
             bundle.putString("city_name", cityList.get(i));
             cityWeatherFragment.setArguments(bundle);

@@ -20,9 +20,6 @@ import com.example.xweather_v2.MainActivity;
 import com.example.xweather_v2.R;
 import com.example.xweather_v2.bean.CityListBean;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class SearchCityActivity extends AppCompatActivity implements View.OnClickListener {
 
     private CityListBean searchResult;
@@ -31,8 +28,7 @@ public class SearchCityActivity extends AppCompatActivity implements View.OnClic
     SearchView searchView_bar;
     ListView listView_city_list;
 
-    ArrayAdapter<String> adapter;
-    List<String> allCityList;
+    ArrayAdapter<CityListBean> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,14 +80,8 @@ public class SearchCityActivity extends AppCompatActivity implements View.OnClic
 
         enableSearchView(searchView_bar, true);
 
-        allCityList = new ArrayList<>();
-        for (CityListBean bean : MainActivity.cityListBeanList) {
-            allCityList.add(bean.getName() + ", " + bean.getCountry());
-        }
-
-        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, allCityList);
+        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, MainActivity.cityListBeanList);
         listView_city_list.setAdapter(adapter);
-
 
         // Allow input the text into the search view to do the query
         searchView_bar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -120,13 +110,12 @@ public class SearchCityActivity extends AppCompatActivity implements View.OnClic
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 for (CityListBean bean : MainActivity.cityListBeanList) {
-                    String compareStr = bean.getName() + ", " + bean.getCountry();
-                    if (adapter.getItem(position).equals(compareStr)) {
-                        System.out.println(bean.getName() + " " + bean.getCoord().getLat() + " " + bean.getCoord().getLon());
+                    if (adapter.getItem(position) == bean) {
+                        Log.d("xwei", bean.getId() + ", " + bean.getName() + ", " + bean.getState() + ", " + bean.getCountry() + "," + bean.getCoord().getLat() + ", " + bean.getCoord().getLon());
                         try {
                             Intent intent = new Intent(SearchCityActivity.this, CityManagerActivity.class);
                             intent.putExtra("cityBean", bean);
-                            startActivity(intent);
+//                            startActivity(intent);
                         } catch (Exception exception) {
                             Log.d("xwei", exception.toString());
                         }

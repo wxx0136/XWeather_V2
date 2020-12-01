@@ -1,6 +1,9 @@
 package com.example.xweather_v2.bean;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.Serializable;
+import java.util.Objects;
 
 public class CityListBean implements Serializable {
 
@@ -16,6 +19,17 @@ public class CityListBean implements Serializable {
     private String state;
     private String country;
     private CoordBean coord;
+
+    @Override
+    public @NotNull String toString() {
+        String str = "";
+        if (Objects.equals(state, "")) {
+            str = name + ", (Prov/State), " + country;
+        } else {
+            str = name + ", " + state + ", " + country;
+        }
+        return str;
+    }
 
     public int getId() {
         return id;

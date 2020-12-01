@@ -14,6 +14,7 @@ import com.example.xweather_v2.BuildConfig;
 import com.example.xweather_v2.R;
 import com.example.xweather_v2.base.BaseFragment;
 import com.example.xweather_v2.bean.CurrentWeatherBean;
+import com.example.xweather_v2.bean.OneCallBean;
 import com.example.xweather_v2.common.Common;
 import com.example.xweather_v2.db.DatabaseManager;
 import com.google.gson.Gson;
@@ -41,12 +42,13 @@ public class CityWeatherFragment extends BaseFragment {
         View view = inflater.inflate(R.layout.fragment_city_weather, container, false);
         initView(view);
         // GET http request
-        String currentWeatherAPI = "https://api.openweathermap.org/data/2.5/weather";
+        String currentWeatherAPI = "https://api.openweathermap.org/data/2.5/onecall";
         RequestParams params = new RequestParams(currentWeatherAPI);
 
         Bundle bundle = getArguments();
-        city_name = bundle.getString("city_name");
-        params.addQueryStringParameter("q", city_name);
+//        city_name = bundle.getString("city_name");
+        params.addQueryStringParameter("lat", );
+        params.addQueryStringParameter("lon", );
         params.addQueryStringParameter("appid", BuildConfig.OWM_API_KEY);
         params.addQueryStringParameter("units", Common.units);
 
@@ -59,27 +61,27 @@ public class CityWeatherFragment extends BaseFragment {
     @SuppressLint("SetTextI18n")
     private void parseShowData(String result) {
         //        使用Gson解析数据
-        CurrentWeatherBean currentWeatherBean = new Gson().fromJson(result, CurrentWeatherBean.class);
+        OneCallBean oneCallBean = new Gson().fromJson(result, OneCallBean.class);
 
         //        today_general
-        String iconURL = "https://openweathermap.org/img/wn/" + currentWeatherBean.getWeather().get(0).getIcon() + "@2x.png";
+        String iconURL = "https://openweathermap.org/img/wn/" + oneCallBean.getCurrent().getWeather().get(0).getIcon() + "@2x.png";
         Picasso.get().load(iconURL).into(img_weather);
-        txt_city_name.setText(currentWeatherBean.getName());
-        txt_temperature.setText(Math.round(currentWeatherBean.getMain().getTemp()) + " ℃");
-        txt_description.setText(currentWeatherBean.getWeather().get(0).getDescription());
-        txt_date_time.setText(Common.convertUnixToDate(currentWeatherBean.getDt()));
-        txt_maxTemp.setText(Math.round(currentWeatherBean.getMain().getTemp_max()) + "");
-        txt_minTemp.setText(Math.round(currentWeatherBean.getMain().getTemp_min()) + "");
+        txt_city_name.setText(oneCallBean.getName());
+        txt_temperature.setText(Math.round(oneCallBean.getCurrent().getTemp()) + " ℃");
+        txt_description.setText(oneCallBean.getCurrent().getWeather().get(0).getDescription());
+        txt_date_time.setText(Common.convertUnixToDate(oneCallBean.getCurrent().getDt()));
+        txt_maxTemp.setText(Math.round(oneCallBean.getDaily().get(0).getTemp().getMax()) + "");
+        txt_minTemp.setText(Math.round(oneCallBean.getDaily().get(0).getTemp().getMin()) + "");
 
 
-        txt_sunrise.setText(Common.convertUnixToHour(currentWeatherBean.getSys().getSunrise()));
-        txt_sunset.setText(Common.convertUnixToHour(currentWeatherBean.getSys().getSunset()));
-        txt_cloudiness.setText(currentWeatherBean.getClouds().getAll() + " %");
-        txt_wind.setText(getWindDirection(currentWeatherBean.getWind().getDeg()) + " " + currentWeatherBean.getWind().getSpeed() + " m/s");
-        txt_feelsLike.setText(Math.round(currentWeatherBean.getMain().getFeels_like()) + " ℃");
-        txt_pressure.setText(currentWeatherBean.getMain().getPressure() + " hPa");
-        txt_humidity.setText(currentWeatherBean.getMain().getHumidity() + " %");
-        txt_visibility.setText(currentWeatherBean.getVisibility() / 1000 + " km");
+        txt_sunrise.setText(Common.convertUnixToHour(oneCallBean.getCurrent().getSunrise()));
+        txt_sunset.setText(Common.convertUnixToHour(oneCallBean.getCurrent().getSunset()));
+        txt_cloudiness.setText(oneCallBean.getCurrent().getClouds() + " %");
+        txt_wind.setText(getWindDirection(oneCallBean.getCurrent().getWind_deg()) + " " + oneCallBean.getCurrent().getWind_speed() + " m/s");
+        txt_feelsLike.setText(Math.round(oneCallBean.getCurrent().getFeels_like()) + " ℃");
+        txt_pressure.setText(oneCallBean.getCurrent().getPressure() + " hPa");
+        txt_humidity.setText(oneCallBean.getCurrent().getHumidity() + " %");
+        txt_visibility.setText(oneCallBean.getCurrent().getVisibility() / 1000 + " km");
     }
 
     // Calculate the wind direction by JSON: wind.deg data.
@@ -131,17 +133,17 @@ public class CityWeatherFragment extends BaseFragment {
     public void onSuccess(String result) {
         parseShowData(result);
 //        Update the database
-        int feedbackInfo = DatabaseManager.updateInfoByCity(city_name, result);
+        int feedbackInfo = DatabaseManager.updateInfoByCity(id, result);
         if (feedbackInfo <= 0) {
             // update failed, that mean there is no this city name in the database
-            DatabaseManager.addCityInfo(city_name, result);
+            DatabaseManager.addCityInfo(id, result);
         }
     }
 
     @Override
     public void onError(Throwable ex, boolean isOnCallback) {
         // Find the weather information from the database
-        String content = DatabaseManager.queryInfoByCity(city_name);
+        String content = DatabaseManager.queryInfoByCity(id);
         if (!TextUtils.isEmpty(content)) {
             parseShowData(content);
         }
