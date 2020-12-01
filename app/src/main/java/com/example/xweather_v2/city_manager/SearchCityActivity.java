@@ -1,10 +1,13 @@
 package com.example.xweather_v2.city_manager;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -75,8 +78,6 @@ public class SearchCityActivity extends AppCompatActivity implements View.OnClic
         }
     }
 
-
-
     private void initAdapterForListView() {
         if (MainActivity.cityListBeanList.isEmpty())
             throw new NullPointerException("MainActivity.cityListBeanList is empty.");
@@ -91,6 +92,7 @@ public class SearchCityActivity extends AppCompatActivity implements View.OnClic
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, allCityList);
         listView_city_list.setAdapter(adapter);
 
+
         // Allow input the text into the search view to do the query
         searchView_bar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -103,10 +105,9 @@ public class SearchCityActivity extends AppCompatActivity implements View.OnClic
                 adapter.getFilter().filter(newText);
 
                 // Hide the listView when no input.
-                if(TextUtils.isEmpty(newText)){
+                if (TextUtils.isEmpty(newText)) {
                     listView_city_list.setVisibility(View.GONE);
-                }
-                else {
+                } else {
                     listView_city_list.setVisibility(View.VISIBLE);
                 }
 
@@ -114,7 +115,30 @@ public class SearchCityActivity extends AppCompatActivity implements View.OnClic
             }
         });
 
+        // Add list View click event
+        listView_city_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                for (CityListBean bean : MainActivity.cityListBeanList) {
+                    String compareStr = bean.getName() + ", " + bean.getCountry();
+                    if (adapter.getItem(position).equals(compareStr)) {
+                        System.out.println(bean.getName() + " " + bean.getCoord().getLat() + " " + bean.getCoord().getLon());
+                        try {
+                            Intent intent = new Intent(SearchCityActivity.this, CityManagerActivity.class);
+                            intent.putExtra("cityBean", bean);
+                            startActivity(intent);
+                        } catch (Exception exception) {
+                            Log.d("xwei", exception.toString());
+                        }
+
+                    }
+                }
+
+            }
+        });
+
     }
+
 
     public void onClick(View view) {
         if (view.getId() == R.id.image_back) finish();

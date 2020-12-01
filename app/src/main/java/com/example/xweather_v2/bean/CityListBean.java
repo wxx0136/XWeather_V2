@@ -1,6 +1,8 @@
 package com.example.xweather_v2.bean;
 
-public class CityListBean {
+import java.io.Serializable;
+
+public class CityListBean implements Serializable {
 
     /**
      * id : 833
@@ -9,7 +11,6 @@ public class CityListBean {
      * country : IR
      * coord : {"lon":47.159401,"lat":34.330502}
      */
-
     private int id;
     private String name;
     private String state;
@@ -56,7 +57,7 @@ public class CityListBean {
         this.coord = coord;
     }
 
-    public static class CoordBean {
+    public static class CoordBean implements Serializable {
         /**
          * lon : 47.159401
          * lat : 34.330502
