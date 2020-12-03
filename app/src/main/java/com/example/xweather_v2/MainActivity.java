@@ -130,6 +130,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         for (DatabaseBean db : dbBean) {
             CityBean city = new CityBean();
             city.setName(db.getCity());
+            city.setState(db.getState());
+            city.setCountry(db.getCountry());
             city.setId(db.getId());
             CityBean.CoordBean cb = new CityBean.CoordBean(db.getLon(), db.getLat());
             city.setCoord(cb);
@@ -146,6 +148,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Bundle bundle = new Bundle();
             bundle.putInt("city_id", cityBeanListFromDB.get(i).getId());
             bundle.putString("city_name", cityBeanListFromDB.get(i).getName());
+            bundle.putString("city_state", cityBeanListFromDB.get(i).getState());
+            bundle.putString("city_country", cityBeanListFromDB.get(i).getCountry());
             bundle.putDouble("city_lat", cityBeanListFromDB.get(i).getCoord().getLat());
             bundle.putDouble("city_lon", cityBeanListFromDB.get(i).getCoord().getLon());
             cityWeatherFragment.setArguments(bundle);
@@ -217,20 +221,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 while ((readed = in.readLine()) != null)
                     builder.append(readed);
 
-//                The city_list.json from open weather map is a JSON[] array.
-//                Example:
-//               [
-//                {
-//                    "id": 833,
-//                        "name": "Ḩeşār-e Sefīd",
-//                        "state": "",
-//                        "country": "IR",
-//                        "coord": {
-//                    "lon": 47.159401,
-//                            "lat": 34.330502
-//                },
-//                ]
-
+                // The city_list.json from open weather map is a JSON[] array.
                 beanList = new Gson().fromJson(builder.toString(), new TypeToken<List<CityBean>>() {
                 }.getType());
 

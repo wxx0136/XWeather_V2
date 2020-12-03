@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical">
 
     <androidx.cardview.widget.CardView
@@ -16,29 +16,35 @@
         app:cardCornerRadius="4dp"
         app:cardElevation="4dp">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <TextView
                 android:id="@+id/txt_city_name"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
                 android:layout_margin="8dp"
+                android:layout_weight="6"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:lines="1"
                 android:text="City Name"
                 android:textColor="@color/design_default_color_primary"
-                android:textSize="24sp" />
+                android:textSize="18sp" />
 
             <ImageView
-                android:padding="4dp"
-                android:id="@+id/image_weather"
-                android:layout_width="50dp"
+                android:id="@+id/image_remove"
+                android:layout_width="0dp"
                 android:layout_height="50dp"
-                android:layout_alignParentEnd="true"
+                android:layout_weight="1"
                 android:background="@color/design_default_color_error"
+                android:padding="4dp"
+                android:visibility="visible"
                 app:srcCompat="@android:drawable/ic_menu_delete" />
 
-        </RelativeLayout>
+        </LinearLayout>
 
     </androidx.cardview.widget.CardView>
 

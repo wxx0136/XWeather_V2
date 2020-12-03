@@ -27,6 +27,8 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
                 android:layout_weight="2"
+                android:ellipsize="end"
+                android:lines="1"
                 android:text="City Name"
                 android:textColor="@color/design_default_color_primary"
                 android:textSize="24sp" />

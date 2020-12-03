@@ -30,6 +30,8 @@ public class CityWeatherFragment extends BaseFragment {
 
     private int city_id;
     private String city_name;
+    private String city_state;
+    private String city_country;
     private double city_lat, city_lon;
 
     public CityWeatherFragment() {
@@ -51,6 +53,8 @@ public class CityWeatherFragment extends BaseFragment {
         assert bundle != null;
         city_id = bundle.getInt("city_id");
         city_name = bundle.getString("city_name");
+        city_state = bundle.getString("city_state");
+        city_country = bundle.getString("city_country");
         city_lat = bundle.getDouble("city_lat");
         city_lon = bundle.getDouble("city_lon");
 
@@ -151,7 +155,7 @@ public class CityWeatherFragment extends BaseFragment {
         int feedbackInfo = DatabaseManager.updateInfoByCity(city_id, result);
         if (feedbackInfo <= 0) {
             // update failed, that mean there is no this city name in the database
-            DatabaseManager.addCityInfo(city_id, city_name, city_lat, city_lon, result);
+            DatabaseManager.addCityInfo(city_id, city_name, city_state, city_country, city_lat, city_lon, result);
         }
     }
 
