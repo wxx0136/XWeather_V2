@@ -29,7 +29,7 @@ public class CityManagerAdapter extends BaseAdapter {
     // Disable click the item.
     @Override
     public boolean isEnabled(int position) {
-        return false;
+        return true;
     }
 
     @Override

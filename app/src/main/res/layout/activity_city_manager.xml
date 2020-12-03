@@ -12,11 +12,12 @@
         android:background="@color/purple_700">
 
         <ImageView
-            android:id="@+id/image_back"
+            android:id="@+id/image_add"
+            android:layout_alignParentEnd="true"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:padding="10dp"
-            app:srcCompat="@drawable/abc_vector_test" />
+            app:srcCompat="@android:drawable/ic_menu_search" />
 
         <TextView
             android:id="@+id/txt_title"
@@ -31,7 +32,6 @@
             android:id="@+id/image_delete"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_alignParentEnd="true"
             android:padding="10dp"
             app:srcCompat="@android:drawable/ic_menu_delete" />
     </RelativeLayout>
@@ -43,19 +43,5 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/city_top_panel"
         android:divider="@color/white" />
-
-
-    <ImageView
-        android:id="@+id/image_add"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/list_city"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        app:srcCompat="@android:drawable/ic_menu_search" />
-
 
 </RelativeLayout>

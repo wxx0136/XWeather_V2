@@ -112,7 +112,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         imageViewList.clear();
         main_layout_point.removeAllViews();
         initPoint();
-        main_vp.setCurrentItem(fragmentList.size() - 1);
+//        main_vp.setCurrentItem(fragmentList.size() - 1);
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        int position = getIntent().getIntExtra("chosen_city_position", fragmentList.size() - 1);
+        Log.d("xwei.Main.onRestart.position", position + "");
+        main_vp.setCurrentItem(position);
     }
 
     private List<CityBean> fetchAllCityInfoFromDB() {
@@ -196,6 +205,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         @Override
         protected List<CityBean> doInBackgroundSimple() {
+            List<CityBean> beanList = new ArrayList<>();
             try {
                 StringBuilder builder = new StringBuilder();
                 InputStream is = getResources().openRawResource(R.raw.city_list);
@@ -221,20 +231,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //                },
 //                ]
 
-                cityBeanListFromFile = new Gson().fromJson(builder.toString(), new TypeToken<List<CityBean>>() {
+                beanList = new Gson().fromJson(builder.toString(), new TypeToken<List<CityBean>>() {
                 }.getType());
 
                 Log.d("city_list", builder.toString());
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            return cityBeanListFromFile;
+            return beanList;
         }
 
         @Override
         protected void onSuccess(List<CityBean> beanList) {
             super.onSuccess(beanList);
-
+            cityBeanListFromFile = beanList;
         }
 
     }

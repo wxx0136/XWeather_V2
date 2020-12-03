@@ -147,9 +147,8 @@ public class CityWeatherFragment extends BaseFragment {
             Log.d("xwei.CityWeatherFragment.onSuccess", exception.toString());
         }
 
-//        Update the database
+        // Update the database
         int feedbackInfo = DatabaseManager.updateInfoByCity(city_id, result);
-        Log.d("xwei.CityWeatherFragment.onSuccess.feedbackInfo",feedbackInfo+" city_id:" + city_id );
         if (feedbackInfo <= 0) {
             // update failed, that mean there is no this city name in the database
             DatabaseManager.addCityInfo(city_id, city_name, city_lat, city_lon, result);

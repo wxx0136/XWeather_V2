@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
@@ -40,7 +39,7 @@ public class SearchCityActivity extends AppCompatActivity implements View.OnClic
         image_back.setOnClickListener(this);
 
         initSearchViewStyle(searchView_bar);
-        enableSearchView(searchView_bar, false);
+//        enableSearchView(searchView_bar, false);
         initAdapterForListView();
     }
 
@@ -61,22 +60,22 @@ public class SearchCityActivity extends AppCompatActivity implements View.OnClic
     }
 
     // Because SearchView is a ViewGroup, so we have to disable all its child views.
-    private void enableSearchView(View view, boolean enabled) {
-        view.setEnabled(enabled);
-        if (view instanceof ViewGroup) {
-            ViewGroup viewGroup = (ViewGroup) view;
-            for (int i = 0; i < viewGroup.getChildCount(); i++) {
-                View child = viewGroup.getChildAt(i);
-                enableSearchView(child, enabled);
-            }
-        }
-    }
+//    private void enableSearchView(View view, boolean enabled) {
+//        view.setEnabled(enabled);
+//        if (view instanceof ViewGroup) {
+//            ViewGroup viewGroup = (ViewGroup) view;
+//            for (int i = 0; i < viewGroup.getChildCount(); i++) {
+//                View child = viewGroup.getChildAt(i);
+//                enableSearchView(child, enabled);
+//            }
+//        }
+//    }
 
     private void initAdapterForListView() {
         if (MainActivity.cityBeanListFromFile.isEmpty())
             throw new NullPointerException("MainActivity.cityListBeanList is empty.");
 
-        enableSearchView(searchView_bar, true);
+//        enableSearchView(searchView_bar, true);
 
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, MainActivity.cityBeanListFromFile);
         listView_city_list.setAdapter(adapter);
