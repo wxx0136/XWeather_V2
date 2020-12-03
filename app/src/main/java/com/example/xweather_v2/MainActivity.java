@@ -68,19 +68,51 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         cityBeanListFromDB = fetchAllCityInfoFromDB();
         imageViewList = new ArrayList<>();
 
-        CityBean defaultCityBean;
-        defaultCityBean = new Gson().fromJson(mockCurrentCityJson, CityBean.class);
-
-
+        // First time running, give a default location. Can be changed by GPS later.
+        CityBean defaultCityBean = new Gson().fromJson(mockCurrentCityJson, CityBean.class);
         if (cityBeanListFromDB.size() == 0) {
             cityBeanListFromDB.add(defaultCityBean);
         }
+
+        // Jump back from SearchCity Activity
+        try {
+            CityBean intentCityBean = (CityBean) getIntent().getSerializableExtra("cityBean");
+            if (intentCityBean != null && !cityBeanListFromDB.contains(intentCityBean)) {
+                cityBeanListFromDB.add(intentCityBean);
+            }
+        } catch (Exception exception) {
+            Log.d("xwei.Main.onCreate", exception.toString());
+        }
+        Log.d("xwei.Main.db content", cityBeanListFromDB.toString());
 
         initPager(); // Init View Pager
         adapter = new CityFragmentPagerAdapter(getSupportFragmentManager(), 0, fragmentList);
         main_vp.setAdapter(adapter);
         initPoint();
         main_vp.setCurrentItem(fragmentList.size() - 1); // Set the default view is the last added one.
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        // Get rest cities in the database
+        CityBean defaultCityBean = new Gson().fromJson(mockCurrentCityJson, CityBean.class);
+        List<CityBean> cityBeanList = fetchAllCityInfoFromDB();
+        if (cityBeanList.size() == 0) {
+            cityBeanList.add(defaultCityBean);
+        }
+        cityBeanListFromDB.clear();
+        cityBeanListFromDB.addAll(cityBeanList);
+
+        // The rest cities create fragments again
+        fragmentList.clear();
+        initPager();
+        adapter.notifyDataSetChanged();
+        // Recreate the number of pager dot
+        imageViewList.clear();
+        main_layout_point.removeAllViews();
+        initPoint();
+        main_vp.setCurrentItem(fragmentList.size() - 1);
     }
 
     private List<CityBean> fetchAllCityInfoFromDB() {

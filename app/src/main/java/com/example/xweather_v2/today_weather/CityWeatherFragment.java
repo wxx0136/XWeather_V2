@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.xweather_v2.BuildConfig;
@@ -28,7 +27,6 @@ public class CityWeatherFragment extends BaseFragment {
     ImageView img_weather;
     TextView txt_city_name, txt_temperature, txt_description, txt_date_time, txt_maxTemp, txt_minTemp,
             txt_sunrise, txt_sunset, txt_wind, txt_feelsLike, txt_pressure, txt_humidity, txt_visibility, txt_cloudiness;
-    LinearLayout panel_today_general, panel_today_details;
 
     int city_id;
     String city_name;
@@ -69,28 +67,31 @@ public class CityWeatherFragment extends BaseFragment {
 
     @SuppressLint("SetTextI18n")
     private void parseShowData(String result) {
-        //        使用Gson解析数据
-        OneCallBean oneCallBean = new Gson().fromJson(result, OneCallBean.class);
+        // 使用Gson解析数据
+        try {
+            OneCallBean oneCallBean = new Gson().fromJson(result, OneCallBean.class);
+            // today_general
+            String iconURL = "https://openweathermap.org/img/wn/" + oneCallBean.getCurrent().getWeather().get(0).getIcon() + "@2x.png";
+            Picasso.get().load(iconURL).into(img_weather);
+            txt_city_name.setText(city_name);
+            txt_temperature.setText(Math.round(oneCallBean.getCurrent().getTemp()) + " ℃");
+            txt_description.setText(oneCallBean.getCurrent().getWeather().get(0).getDescription());
+            txt_date_time.setText(Common.convertUnixToDate(oneCallBean.getCurrent().getDt()));
+            txt_maxTemp.setText(Math.round(oneCallBean.getDaily().get(0).getTemp().getMax()) + "");
+            txt_minTemp.setText(Math.round(oneCallBean.getDaily().get(0).getTemp().getMin()) + "");
 
-        //        today_general
-        String iconURL = "https://openweathermap.org/img/wn/" + oneCallBean.getCurrent().getWeather().get(0).getIcon() + "@2x.png";
-        Picasso.get().load(iconURL).into(img_weather);
-        txt_city_name.setText(city_name);
-        txt_temperature.setText(Math.round(oneCallBean.getCurrent().getTemp()) + " ℃");
-        txt_description.setText(oneCallBean.getCurrent().getWeather().get(0).getDescription());
-        txt_date_time.setText(Common.convertUnixToDate(oneCallBean.getCurrent().getDt()));
-        txt_maxTemp.setText(Math.round(oneCallBean.getDaily().get(0).getTemp().getMax()) + "");
-        txt_minTemp.setText(Math.round(oneCallBean.getDaily().get(0).getTemp().getMin()) + "");
+            txt_sunrise.setText(Common.convertUnixToHour(oneCallBean.getCurrent().getSunrise()));
+            txt_sunset.setText(Common.convertUnixToHour(oneCallBean.getCurrent().getSunset()));
+            txt_cloudiness.setText(oneCallBean.getCurrent().getClouds() + " %");
+            txt_wind.setText(getWindDirection(oneCallBean.getCurrent().getWind_deg()) + " " + oneCallBean.getCurrent().getWind_speed() + " m/s");
+            txt_feelsLike.setText(Math.round(oneCallBean.getCurrent().getFeels_like()) + " ℃");
+            txt_pressure.setText(oneCallBean.getCurrent().getPressure() + " hPa");
+            txt_humidity.setText(oneCallBean.getCurrent().getHumidity() + " %");
+            txt_visibility.setText(oneCallBean.getCurrent().getVisibility() / 1000 + " km");
+        } catch (Exception exception) {
+            Log.d("xwei.jsonParse", exception.toString());
+        }
 
-
-        txt_sunrise.setText(Common.convertUnixToHour(oneCallBean.getCurrent().getSunrise()));
-        txt_sunset.setText(Common.convertUnixToHour(oneCallBean.getCurrent().getSunset()));
-        txt_cloudiness.setText(oneCallBean.getCurrent().getClouds() + " %");
-        txt_wind.setText(getWindDirection(oneCallBean.getCurrent().getWind_deg()) + " " + oneCallBean.getCurrent().getWind_speed() + " m/s");
-        txt_feelsLike.setText(Math.round(oneCallBean.getCurrent().getFeels_like()) + " ℃");
-        txt_pressure.setText(oneCallBean.getCurrent().getPressure() + " hPa");
-        txt_humidity.setText(oneCallBean.getCurrent().getHumidity() + " %");
-        txt_visibility.setText(oneCallBean.getCurrent().getVisibility() / 1000 + " km");
     }
 
     // Calculate the wind direction by JSON: wind.deg data.
@@ -143,11 +144,12 @@ public class CityWeatherFragment extends BaseFragment {
         try {
             parseShowData(result);
         } catch (Exception exception) {
-            Log.d("xwei, bug: ", exception.toString());
+            Log.d("xwei.CityWeatherFragment.onSuccess", exception.toString());
         }
 
 //        Update the database
         int feedbackInfo = DatabaseManager.updateInfoByCity(city_id, result);
+        Log.d("xwei.CityWeatherFragment.onSuccess.feedbackInfo",feedbackInfo+" city_id:" + city_id );
         if (feedbackInfo <= 0) {
             // update failed, that mean there is no this city name in the database
             DatabaseManager.addCityInfo(city_id, city_name, city_lat, city_lon, result);

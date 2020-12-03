@@ -109,14 +109,11 @@ public class SearchCityActivity extends AppCompatActivity implements View.OnClic
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 for (CityBean bean : MainActivity.cityBeanListFromFile) {
                     if (adapter.getItem(position) == bean) {
-                        Log.d("xwei", bean.getId() + ", " + bean.getName() + ", " + bean.getState() + ", " + bean.getCountry() + "," + bean.getCoord().getLat() + ", " + bean.getCoord().getLon());
+                        Log.d("xwei.SearchAct.ItemClick", "city_id: " + bean.getId() + ", " + bean.getName() + ", " + bean.getState() + ", " + bean.getCountry() + ", Lat: " + bean.getCoord().getLat() + ", Lon: " + bean.getCoord().getLon());
                         Intent intent = new Intent(SearchCityActivity.this, MainActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
                         intent.putExtra("cityBean", bean);
                         startActivity(intent);
-                        // 通过JSON文件获取城市的id, cityName和座标（这些值也是one Call API 获取不到的），然后把这些值返回给
-                        // MainActivity。MainActivity先读取这个值，加入其列表中，然后销毁activity，再重新生成。生成的过程中，CityFragment
-                        // 就可以根据MainActivity已读到的值来生成Fragment，并放在View Pager中。
                     }
                 }
 
@@ -125,7 +122,6 @@ public class SearchCityActivity extends AppCompatActivity implements View.OnClic
         });
 
     }
-
 
     public void onClick(View view) {
         if (view.getId() == R.id.image_back) finish();

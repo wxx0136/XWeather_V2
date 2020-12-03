@@ -2,6 +2,7 @@ package com.example.xweather_v2.city_manager;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -50,14 +51,14 @@ public class CityManagerActivity extends AppCompatActivity implements View.OnCli
     @Override
     protected void onResume() {
         super.onResume();
-        cityBean = (CityBean) getIntent().getSerializableExtra("cityBean"); // Get the new city from SearchCityActivity.
+//        cityBean = (CityBean) getIntent().getSerializableExtra("cityBean"); // Get the new city from SearchCityActivity.
 
         // Get the real-time info from the database, add them into the memory(Bean/Result), and notify the adapter to renew.
         List<DatabaseBean> list = DatabaseManager.queryAllInfo();
+        Log.d("xwei.debug.cityManager: ",list.size()+"");
         mDatas.clear();
         mDatas.addAll(list);
         cityManagerAdapter.notifyDataSetChanged();
-
 
     }
 
@@ -79,7 +80,6 @@ public class CityManagerActivity extends AppCompatActivity implements View.OnCli
             case R.id.image_delete:
                 Intent intent_remove = new Intent(this, RemoveCityActivity.class);
                 startActivity(intent_remove);
-
                 break;
         }
     }

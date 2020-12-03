@@ -117,7 +117,7 @@ public class OneCallBean {
         private int pressure;
         private int humidity;
         private double dew_point;
-        private int uvi;
+        private double uvi;
         private int clouds;
         private int visibility;
         private double wind_speed;
@@ -188,11 +188,11 @@ public class OneCallBean {
             this.dew_point = dew_point;
         }
 
-        public int getUvi() {
+        public double getUvi() {
             return uvi;
         }
 
-        public void setUvi(int uvi) {
+        public void setUvi(double uvi) {
             this.uvi = uvi;
         }
 
@@ -548,7 +548,7 @@ public class OneCallBean {
         private double wind_speed;
         private int wind_deg;
         private int clouds;
-        private int pop;
+        private double pop;
         private double rain;
         private double uvi;
         private List<WeatherBeanXX> weather;
@@ -641,11 +641,11 @@ public class OneCallBean {
             this.clouds = clouds;
         }
 
-        public int getPop() {
+        public double getPop() {
             return pop;
         }
 
-        public void setPop(int pop) {
+        public void setPop(double pop) {
             this.pop = pop;
         }
 
