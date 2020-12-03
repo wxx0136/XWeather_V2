@@ -10,6 +10,7 @@ import java.util.List;
 public class CityFragmentPagerAdapter extends FragmentStatePagerAdapter {
 
     List<Fragment> fragmentList;
+    int childCount = 0;
 
     public CityFragmentPagerAdapter(@NonNull FragmentManager fm, int behaviour, List<Fragment> fragmentList) {
         super(fm, behaviour);
@@ -26,5 +27,21 @@ public class CityFragmentPagerAdapter extends FragmentStatePagerAdapter {
     @Override
     public int getCount() {
         return fragmentList.size();
+    }
+
+    //    When the pages of View Pager changed, we need to override the following two functions.
+    @Override
+    public void notifyDataSetChanged() {
+        this.childCount = getCount();
+        super.notifyDataSetChanged();
+    }
+
+    @Override
+    public int getItemPosition(@NonNull Object object) {
+        if (childCount > 0) {
+            childCount--;
+            return POSITION_NONE;
+        }
+        return super.getItemPosition(object);
     }
 }

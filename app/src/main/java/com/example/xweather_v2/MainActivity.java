@@ -40,11 +40,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     String mockCurrentCityJson = "{\"id\":6183235,\"name\":\"Winnipeg\",\"state\":\"\",\"country\":\"CA\",\"coord\":{\"lon\":-97.147041,\"lat\":49.884399}}";
 
     List<Fragment> fragmentList; // Data source of the View Pager
-    List<CityBean> cityBeanListFromDB;
+    List<CityBean> cityListFromDB;
     List<ImageView> imageViewList;
     private CityFragmentPagerAdapter adapter;
 
-    public static List<CityBean> cityBeanListFromFile;
+    public static List<CityBean> cityListFromFile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,25 +65,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         fragmentList = new ArrayList<>();
 
-        cityBeanListFromDB = fetchAllCityInfoFromDB();
+        cityListFromDB = fetchAllCityInfoFromDB();
         imageViewList = new ArrayList<>();
 
         // First time running, give a default location. Can be changed by GPS later.
         CityBean defaultCityBean = new Gson().fromJson(mockCurrentCityJson, CityBean.class);
-        if (cityBeanListFromDB.size() == 0) {
-            cityBeanListFromDB.add(defaultCityBean);
+        if (cityListFromDB.size() == 0) {
+            cityListFromDB.add(defaultCityBean);
         }
 
         // Jump back from SearchCity Activity
         try {
             CityBean intentCityBean = (CityBean) getIntent().getSerializableExtra("cityBean");
-            if (intentCityBean != null && !cityBeanListFromDB.contains(intentCityBean)) {
-                cityBeanListFromDB.add(intentCityBean);
+            if (intentCityBean != null && !cityListFromDB.contains(intentCityBean)) {
+                cityListFromDB.add(intentCityBean);
             }
         } catch (Exception exception) {
             Log.d("xwei.Main.onCreate", exception.toString());
         }
-        Log.d("xwei.Main.db content", cityBeanListFromDB.toString());
+        Log.d("xwei.Main.db content", cityListFromDB.toString());
 
         initPager(); // Init View Pager
         adapter = new CityFragmentPagerAdapter(getSupportFragmentManager(), 0, fragmentList);
@@ -97,12 +97,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onRestart();
         // Get rest cities in the database
         CityBean defaultCityBean = new Gson().fromJson(mockCurrentCityJson, CityBean.class);
-        List<CityBean> cityBeanList = fetchAllCityInfoFromDB();
-        if (cityBeanList.size() == 0) {
-            cityBeanList.add(defaultCityBean);
+        List<CityBean> restCityList = fetchAllCityInfoFromDB();
+        if (restCityList.size() == 0) {
+            restCityList.add(defaultCityBean);
         }
-        cityBeanListFromDB.clear();
-        cityBeanListFromDB.addAll(cityBeanList);
+        cityListFromDB.clear();
+        cityListFromDB.addAll(restCityList);
 
         // The rest cities create fragments again
         fragmentList.clear();
@@ -142,16 +142,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void initPager() {
         // Create Fragment objects, add them to the view pager data source.
-        for (int i = 0; i < cityBeanListFromDB.size(); i++) {
+        for (int i = 0; i < cityListFromDB.size(); i++) {
             CityWeatherFragment cityWeatherFragment = new CityWeatherFragment();
 
             Bundle bundle = new Bundle();
-            bundle.putInt("city_id", cityBeanListFromDB.get(i).getId());
-            bundle.putString("city_name", cityBeanListFromDB.get(i).getName());
-            bundle.putString("city_state", cityBeanListFromDB.get(i).getState());
-            bundle.putString("city_country", cityBeanListFromDB.get(i).getCountry());
-            bundle.putDouble("city_lat", cityBeanListFromDB.get(i).getCoord().getLat());
-            bundle.putDouble("city_lon", cityBeanListFromDB.get(i).getCoord().getLon());
+            bundle.putInt("city_id", cityListFromDB.get(i).getId());
+            bundle.putString("city_name", cityListFromDB.get(i).getName());
+            bundle.putString("city_state", cityListFromDB.get(i).getState());
+            bundle.putString("city_country", cityListFromDB.get(i).getCountry());
+            bundle.putDouble("city_lat", cityListFromDB.get(i).getCoord().getLat());
+            bundle.putDouble("city_lon", cityListFromDB.get(i).getCoord().getLon());
             cityWeatherFragment.setArguments(bundle);
             fragmentList.add(cityWeatherFragment);
         }
@@ -235,7 +235,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         @Override
         protected void onSuccess(List<CityBean> beanList) {
             super.onSuccess(beanList);
-            cityBeanListFromFile = beanList;
+            cityListFromFile = beanList;
         }
 
     }

@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -72,12 +71,12 @@ public class SearchCityActivity extends AppCompatActivity implements View.OnClic
 //    }
 
     private void initAdapterForListView() {
-        if (MainActivity.cityBeanListFromFile.isEmpty())
+        if (MainActivity.cityListFromFile.isEmpty())
             throw new NullPointerException("MainActivity.cityListBeanList is empty.");
 
 //        enableSearchView(searchView_bar, true);
 
-        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, MainActivity.cityBeanListFromFile);
+        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, MainActivity.cityListFromFile);
         listView_city_list.setAdapter(adapter);
 
         // Allow input the text into the search view to do the query
@@ -103,19 +102,15 @@ public class SearchCityActivity extends AppCompatActivity implements View.OnClic
         });
 
         // Add list View click event
-        listView_city_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                for (CityBean bean : MainActivity.cityBeanListFromFile) {
-                    if (adapter.getItem(position) == bean) {
-                        Log.d("xwei.SearchAct.ItemClick", "city_id: " + bean.getId() + ", " + bean.getName() + ", " + bean.getState() + ", " + bean.getCountry() + ", Lat: " + bean.getCoord().getLat() + ", Lon: " + bean.getCoord().getLon());
-                        Intent intent = new Intent(SearchCityActivity.this, MainActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
-                        intent.putExtra("cityBean", bean);
-                        startActivity(intent);
-                    }
+        listView_city_list.setOnItemClickListener((parent, view, position, id) -> {
+            for (CityBean bean : MainActivity.cityListFromFile) {
+                if (adapter.getItem(position) == bean) {
+                    Log.d("xwei.SearchAct.ItemClick", "city_id: " + bean.getId() + ", " + bean.getName() + ", " + bean.getState() + ", " + bean.getCountry() + ", Lat: " + bean.getCoord().getLat() + ", Lon: " + bean.getCoord().getLon());
+                    Intent intent = new Intent(SearchCityActivity.this, MainActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.putExtra("cityBean", bean);
+                    startActivity(intent);
                 }
-
             }
 
         });
