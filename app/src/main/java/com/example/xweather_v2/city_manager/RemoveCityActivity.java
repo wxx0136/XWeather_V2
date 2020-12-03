@@ -1,5 +1,6 @@
 package com.example.xweather_v2.city_manager;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -21,8 +22,6 @@ public class RemoveCityActivity extends AppCompatActivity implements View.OnClic
     List<DatabaseBean> mDatas;
     List<DatabaseBean> removeCities; // Temporary save the cities I want to remove from the database.
 
-    private RemoveCityAdapter adapter;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,10 +37,11 @@ public class RemoveCityActivity extends AppCompatActivity implements View.OnClic
         image_confirm.setOnClickListener(this);
         image_back.setOnClickListener(this);
 
-        adapter = new RemoveCityAdapter(this, mDatas, removeCities);
+        RemoveCityAdapter adapter = new RemoveCityAdapter(this, mDatas, removeCities);
         list_city.setAdapter(adapter);
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View v) {
         switch (v.getId()) {

@@ -47,10 +47,10 @@ public class RemoveCityAdapter extends BaseAdapter {
         return position;
     }
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint({"SetTextI18n", "InflateParams"})
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder holder = null;
+        ViewHolder holder;
         if (convertView == null) {
             convertView = LayoutInflater.from(context).inflate(R.layout.item_remove_city, null);
             holder = new ViewHolder(convertView);
@@ -64,28 +64,25 @@ public class RemoveCityAdapter extends BaseAdapter {
         } else {
             holder.textView.setText(databaseBean.getCity() + ", " + databaseBean.getState() + ", " + databaseBean.getCountry());
         }
-        holder.imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mDatas.size() != 1) {
-                    mDatas.remove(databaseBean);
-                    removeCities.add(databaseBean);
+        holder.imageView.setOnClickListener(v -> {
+            if (mDatas.size() != 1) {
+                mDatas.remove(databaseBean);
+                removeCities.add(databaseBean);
 
-                    // If there is only one city left, you can't remove it.
-                    if (mDatas.size() == 1) {
-                        parent.getChildAt(0).findViewById(R.id.image_remove).setVisibility(View.INVISIBLE);
-                    }
-                    notifyDataSetChanged();
+                // If there is only one city left, you can't remove it.
+                if (mDatas.size() == 1) {
+                    parent.getChildAt(0).findViewById(R.id.image_remove).setVisibility(View.INVISIBLE);
                 }
-
+                notifyDataSetChanged();
             }
+
         });
 
 
         return convertView;
     }
 
-    class ViewHolder {
+    static class ViewHolder {
         TextView textView;
         ImageView imageView;
 

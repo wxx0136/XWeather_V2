@@ -74,8 +74,8 @@ public class DatabaseManager {
     }
 
     // Based on the city_id, remove the info of this city in the database
-    public static int removeInfoByCity(int id) {
-        return database.delete("info", "id=?", new String[]{String.valueOf(id)});
+    public static void removeInfoByCity(int id) {
+        database.delete("info", "id=?", new String[]{String.valueOf(id)});
     }
 
 

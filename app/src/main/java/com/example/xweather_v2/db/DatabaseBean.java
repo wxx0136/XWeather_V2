@@ -10,9 +10,6 @@ public class DatabaseBean {
     private double lon;
     private String content;
 
-    public DatabaseBean() {
-    }
-
     public DatabaseBean(int _pk, int id, String city, String state, String country, double lat, double lon, String content) {
         this._pk = _pk;
         this.id = id;

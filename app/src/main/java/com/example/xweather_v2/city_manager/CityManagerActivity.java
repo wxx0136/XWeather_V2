@@ -1,10 +1,10 @@
 package com.example.xweather_v2.city_manager;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -13,7 +13,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.xweather_v2.MainActivity;
 import com.example.xweather_v2.R;
-import com.example.xweather_v2.bean.CityBean;
 import com.example.xweather_v2.db.DatabaseBean;
 import com.example.xweather_v2.db.DatabaseManager;
 
@@ -27,7 +26,8 @@ public class CityManagerActivity extends AppCompatActivity implements View.OnCli
     List<DatabaseBean> mDatas;
     CityManagerAdapter cityManagerAdapter;
 
-    private CityBean cityBean;
+    public CityManagerActivity() {
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,17 +59,15 @@ public class CityManagerActivity extends AppCompatActivity implements View.OnCli
         mDatas.addAll(list);
         cityManagerAdapter.notifyDataSetChanged();
 
-        list_city.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(CityManagerActivity.this, MainActivity.class);
-                intent.putExtra("chosen_city_position", position);
-                startActivity(intent);
-            }
+        list_city.setOnItemClickListener((parent, view, position, id) -> {
+            Intent intent = new Intent(CityManagerActivity.this, MainActivity.class);
+            intent.putExtra("chosen_city_position", position);
+            startActivity(intent);
         });
 
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
