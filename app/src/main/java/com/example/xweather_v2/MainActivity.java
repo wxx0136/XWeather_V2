@@ -12,8 +12,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
-import com.example.xweather_v2.bean.CityListBean;
+import com.example.xweather_v2.bean.CityBean;
 import com.example.xweather_v2.city_manager.CityManagerActivity;
+import com.example.xweather_v2.db.DatabaseBean;
 import com.example.xweather_v2.db.DatabaseManager;
 import com.example.xweather_v2.today_weather.CityFragmentPagerAdapter;
 import com.example.xweather_v2.today_weather.CityWeatherFragment;
@@ -39,11 +40,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     String mockCurrentCityJson = "{\"id\":6183235,\"name\":\"Winnipeg\",\"state\":\"\",\"country\":\"CA\",\"coord\":{\"lon\":-97.147041,\"lat\":49.884399}}";
 
     List<Fragment> fragmentList; // Data source of the View Pager
-    List<String> cityList;
+    List<CityBean> cityBeanListFromDB;
     List<ImageView> imageViewList;
     private CityFragmentPagerAdapter adapter;
 
-    public static List<CityListBean> cityListBeanList;
+    public static List<CityBean> cityBeanListFromFile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,12 +64,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         main_img_more.setOnClickListener(this);
 
         fragmentList = new ArrayList<>();
-        cityList = DatabaseManager.queryAllCityName(); // Get the city list in the database
+
+        cityBeanListFromDB = fetchAllCityInfoFromDB();
         imageViewList = new ArrayList<>();
-        if (cityList.size() == 0) {
-            cityList.add("Winnipeg");
-            cityList.add("Toronto");
+
+        // First time running, give a default location. Can be changed by GPS later.
+        CityBean defaultCityBean = new Gson().fromJson(mockCurrentCityJson, CityBean.class);
+        if (cityBeanListFromDB.size() == 0) {
+            cityBeanListFromDB.add(defaultCityBean);
         }
+
+        // Jump back from SearchCity Activity
+        try {
+            CityBean intentCityBean = (CityBean) getIntent().getSerializableExtra("cityBean");
+            if (intentCityBean != null && !cityBeanListFromDB.contains(intentCityBean)) {
+                cityBeanListFromDB.add(intentCityBean);
+            }
+        } catch (Exception exception) {
+            Log.d("xwei.Main.onCreate", exception.toString());
+        }
+        Log.d("xwei.Main.db content", cityBeanListFromDB.toString());
 
         initPager(); // Init View Pager
         adapter = new CityFragmentPagerAdapter(getSupportFragmentManager(), 0, fragmentList);
@@ -77,12 +92,53 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         main_vp.setCurrentItem(fragmentList.size() - 1); // Set the default view is the last added one.
     }
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        // Get rest cities in the database
+        CityBean defaultCityBean = new Gson().fromJson(mockCurrentCityJson, CityBean.class);
+        List<CityBean> cityBeanList = fetchAllCityInfoFromDB();
+        if (cityBeanList.size() == 0) {
+            cityBeanList.add(defaultCityBean);
+        }
+        cityBeanListFromDB.clear();
+        cityBeanListFromDB.addAll(cityBeanList);
+
+        // The rest cities create fragments again
+        fragmentList.clear();
+        initPager();
+        adapter.notifyDataSetChanged();
+        // Recreate the number of pager dot
+        imageViewList.clear();
+        main_layout_point.removeAllViews();
+        initPoint();
+        main_vp.setCurrentItem(fragmentList.size() - 1);
+    }
+
+    private List<CityBean> fetchAllCityInfoFromDB() {
+        List<DatabaseBean> dbBean = DatabaseManager.queryAllInfo();
+        List<CityBean> returnList = new ArrayList<>();
+        for (DatabaseBean db : dbBean) {
+            CityBean city = new CityBean();
+            city.setName(db.getCity());
+            city.setId(db.getId());
+            CityBean.CoordBean cb = new CityBean.CoordBean(db.getLon(), db.getLat());
+            city.setCoord(cb);
+            returnList.add(city);
+        }
+        return returnList;
+    }
+
     private void initPager() {
         // Create Fragment objects, add them to the view pager data source.
-        for (int i = 0; i < cityList.size(); i++) {
+        for (int i = 0; i < cityBeanListFromDB.size(); i++) {
             CityWeatherFragment cityWeatherFragment = new CityWeatherFragment();
+
             Bundle bundle = new Bundle();
-            bundle.putString("city_name", cityList.get(i));
+            bundle.putInt("city_id", cityBeanListFromDB.get(i).getId());
+            bundle.putString("city_name", cityBeanListFromDB.get(i).getName());
+            bundle.putDouble("city_lat", cityBeanListFromDB.get(i).getCoord().getLat());
+            bundle.putDouble("city_lon", cityBeanListFromDB.get(i).getCoord().getLon());
             cityWeatherFragment.setArguments(bundle);
             fragmentList.add(cityWeatherFragment);
         }
@@ -136,10 +192,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     //  Get the city list for other activity to use later.
-    private class loadCities extends SimpleAsyncTask<List<CityListBean>> {
+    private class loadCities extends SimpleAsyncTask<List<CityBean>> {
 
         @Override
-        protected List<CityListBean> doInBackgroundSimple() {
+        protected List<CityBean> doInBackgroundSimple() {
             try {
                 StringBuilder builder = new StringBuilder();
                 InputStream is = getResources().openRawResource(R.raw.city_list);
@@ -165,18 +221,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //                },
 //                ]
 
-                cityListBeanList = new Gson().fromJson(builder.toString(), new TypeToken<List<CityListBean>>() {
+                cityBeanListFromFile = new Gson().fromJson(builder.toString(), new TypeToken<List<CityBean>>() {
                 }.getType());
 
                 Log.d("city_list", builder.toString());
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            return cityListBeanList;
+            return cityBeanListFromFile;
         }
 
         @Override
-        protected void onSuccess(List<CityListBean> beanList) {
+        protected void onSuccess(List<CityBean> beanList) {
             super.onSuccess(beanList);
 
         }

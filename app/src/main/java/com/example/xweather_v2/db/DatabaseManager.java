@@ -19,35 +19,38 @@ public class DatabaseManager {
     }
 
     // Search city list in the database
-    public static List<String> queryAllCityName() {
-        @SuppressLint("Recycle") Cursor cursor = database.query("info", null, null, null, null, null, null);
-        List<String> cityList = new ArrayList<>();
-        while (cursor.moveToNext()) {
-            String city = cursor.getString(cursor.getColumnIndex("city"));
-            cityList.add(city);
-        }
-
-        return cityList;
-    }
+//    public static List<String> queryAllCityName() {
+//        @SuppressLint("Recycle") Cursor cursor = database.query("info", null, null, null, null, null, null);
+//        List<String> cityList = new ArrayList<>();
+//        while (cursor.moveToNext()) {
+//            String city_id = cursor.getString(cursor.getColumnIndex("id"));
+//            cityList.add(city_id);
+//        }
+//
+//        return cityList;
+//    }
 
     // Based on the city name, update the content
-    public static int updateInfoByCity(String city, String content) {
+    public static int updateInfoByCity(int id, String content) {
         ContentValues values = new ContentValues();
         values.put("content", content);
-        return database.update("info", values, "city=?", new String[]{city});
+        return database.update("info", values, "id=?", new String[]{String.valueOf(id)});
     }
 
     // Add a new city
-    public static long addCityInfo(String city, String content) {
+    public static long addCityInfo(int id, String city, double lat, double lon, String content) {
         ContentValues values = new ContentValues();
+        values.put("id", id);
         values.put("city", city);
+        values.put("lat", lat);
+        values.put("lon", lon);
         values.put("content", content);
         return database.insert("info", null, values);
     }
 
     // Query the weather info based on the city name.
-    public static String queryInfoByCity(String city) {
-        @SuppressLint("Recycle") Cursor cursor = database.query("info", null, "city=?", new String[]{city}, null, null, null);
+    public static String queryInfoByCity(int id) {
+        @SuppressLint("Recycle") Cursor cursor = database.query("info", null, "id=?", new String[]{String.valueOf(id)}, null, null, null);
         if (cursor.getCount() > 0) {
             cursor.moveToFirst();
             return cursor.getString(cursor.getColumnIndex("content"));
@@ -63,13 +66,16 @@ public class DatabaseManager {
 
     // Fetch all information from the database
     public static List<DatabaseBean> queryAllInfo() {
-        Cursor cursor = database.query("info", null, null, null, null, null, null);
+        @SuppressLint("Recycle") Cursor cursor = database.query("info", null, null, null, null, null, null);
         List<DatabaseBean> databaseBeanList = new ArrayList<>();
         while (cursor.moveToNext()) {
-            int id = cursor.getInt(cursor.getColumnIndex("_id"));
+            int _pk = cursor.getInt(cursor.getColumnIndex("_pk"));
+            int id = cursor.getInt(cursor.getColumnIndex("id"));
             String city = cursor.getString(cursor.getColumnIndex("city"));
+            double lat = cursor.getDouble(cursor.getColumnIndex("lat"));
+            double lon = cursor.getDouble(cursor.getColumnIndex("lon"));
             String content = cursor.getString(cursor.getColumnIndex("content"));
-            DatabaseBean bean = new DatabaseBean(id, city, content);
+            DatabaseBean bean = new DatabaseBean(_pk, id, city, lat, lon, content);
             databaseBeanList.add(bean);
         }
         return databaseBeanList;
