@@ -290,7 +290,7 @@ public class OneCallBean {
          */
 
         private int dt;
-        private int precipitation;
+        private double precipitation;
 
         public int getDt() {
             return dt;
@@ -300,11 +300,11 @@ public class OneCallBean {
             this.dt = dt;
         }
 
-        public int getPrecipitation() {
+        public double getPrecipitation() {
             return precipitation;
         }
 
-        public void setPrecipitation(int precipitation) {
+        public void setPrecipitation(double precipitation) {
             this.precipitation = precipitation;
         }
     }

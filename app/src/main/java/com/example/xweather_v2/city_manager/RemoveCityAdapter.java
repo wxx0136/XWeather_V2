@@ -1,7 +1,6 @@
 package com.example.xweather_v2.city_manager;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,11 +15,11 @@ import java.util.List;
 import java.util.Objects;
 
 public class RemoveCityAdapter extends BaseAdapter {
-    Context context;
+    RemoveCityActivity context;
     List<DatabaseBean> mDatas;
     List<DatabaseBean> removeCities;
 
-    public RemoveCityAdapter(Context context, List<DatabaseBean> mDatas, List<DatabaseBean> removeCities) {
+    public RemoveCityAdapter(RemoveCityActivity context, List<DatabaseBean> mDatas, List<DatabaseBean> removeCities) {
         this.context = context;
         this.mDatas = mDatas;
         this.removeCities = removeCities;
@@ -64,15 +63,15 @@ public class RemoveCityAdapter extends BaseAdapter {
         } else {
             holder.textView.setText(databaseBean.getCity() + ", " + databaseBean.getState() + ", " + databaseBean.getCountry());
         }
+
+        // If there is only one city left, you can't remove it.
+        if(mDatas.size()==1) holder.imageView.setVisibility(View.INVISIBLE);
+
         holder.imageView.setOnClickListener(v -> {
             if (mDatas.size() != 1) {
+                context.findViewById(R.id.image_confirm).setVisibility(View.VISIBLE);
                 mDatas.remove(databaseBean);
                 removeCities.add(databaseBean);
-
-                // If there is only one city left, you can't remove it.
-                if (mDatas.size() == 1) {
-                    parent.getChildAt(0).findViewById(R.id.image_remove).setVisibility(View.INVISIBLE);
-                }
                 notifyDataSetChanged();
             }
 
