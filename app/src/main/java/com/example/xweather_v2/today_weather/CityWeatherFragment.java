@@ -24,13 +24,13 @@ import org.xutils.x;
 
 public class CityWeatherFragment extends BaseFragment {
 
-    ImageView img_weather;
-    TextView txt_city_name, txt_temperature, txt_description, txt_date_time, txt_maxTemp, txt_minTemp,
+    private ImageView img_weather;
+    private TextView txt_city_name, txt_temperature, txt_description, txt_date_time, txt_maxTemp, txt_minTemp,
             txt_sunrise, txt_sunset, txt_wind, txt_feelsLike, txt_pressure, txt_humidity, txt_visibility, txt_cloudiness;
 
-    int city_id;
-    String city_name;
-    double city_lat, city_lon;
+    private int city_id;
+    private String city_name;
+    private double city_lat, city_lon;
 
     public CityWeatherFragment() {
         // Required empty public constructor

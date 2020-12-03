@@ -135,7 +135,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             CityWeatherFragment cityWeatherFragment = new CityWeatherFragment();
 
             Bundle bundle = new Bundle();
-            bundle.putInt("city_id", cityBeanListFromDB.get(0).getId());
+            bundle.putInt("city_id", cityBeanListFromDB.get(i).getId());
             bundle.putString("city_name", cityBeanListFromDB.get(i).getName());
             bundle.putDouble("city_lat", cityBeanListFromDB.get(i).getCoord().getLat());
             bundle.putDouble("city_lon", cityBeanListFromDB.get(i).getCoord().getLon());
