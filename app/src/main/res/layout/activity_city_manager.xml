@@ -13,11 +13,11 @@
 
         <ImageView
             android:id="@+id/image_add"
-            android:layout_alignParentEnd="true"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
             android:padding="10dp"
-            app:srcCompat="@android:drawable/ic_menu_search" />
+            app:srcCompat="@drawable/baseline_search_white_24" />
 
         <TextView
             android:id="@+id/txt_title"
@@ -33,7 +33,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:padding="10dp"
-            app:srcCompat="@android:drawable/ic_menu_delete" />
+            app:srcCompat="@drawable/baseline_delete_white_24" />
     </RelativeLayout>
 
 
