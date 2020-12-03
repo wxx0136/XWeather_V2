@@ -19,16 +19,16 @@ public class DatabaseManager {
     }
 
     // Search city list in the database
-    public static List<String> queryAllCityName() {
-        @SuppressLint("Recycle") Cursor cursor = database.query("info", null, null, null, null, null, null);
-        List<String> cityList = new ArrayList<>();
-        while (cursor.moveToNext()) {
-            String city_id = cursor.getString(cursor.getColumnIndex("id"));
-            cityList.add(city_id);
-        }
-
-        return cityList;
-    }
+//    public static List<String> queryAllCityName() {
+//        @SuppressLint("Recycle") Cursor cursor = database.query("info", null, null, null, null, null, null);
+//        List<String> cityList = new ArrayList<>();
+//        while (cursor.moveToNext()) {
+//            String city_id = cursor.getString(cursor.getColumnIndex("id"));
+//            cityList.add(city_id);
+//        }
+//
+//        return cityList;
+//    }
 
     // Based on the city name, update the content
     public static int updateInfoByCity(int id, String content) {
@@ -66,7 +66,7 @@ public class DatabaseManager {
 
     // Fetch all information from the database
     public static List<DatabaseBean> queryAllInfo() {
-        Cursor cursor = database.query("info", null, null, null, null, null, null);
+        @SuppressLint("Recycle") Cursor cursor = database.query("info", null, null, null, null, null, null);
         List<DatabaseBean> databaseBeanList = new ArrayList<>();
         while (cursor.moveToNext()) {
             int _pk = cursor.getInt(cursor.getColumnIndex("_pk"));

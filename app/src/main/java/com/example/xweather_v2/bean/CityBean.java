@@ -80,6 +80,11 @@ public class CityBean implements Serializable {
         private double lon;
         private double lat;
 
+        public CoordBean(double lon, double lat){
+            this.lon = lon;
+            this.lat = lat;
+        }
+
         public double getLon() {
             return lon;
         }

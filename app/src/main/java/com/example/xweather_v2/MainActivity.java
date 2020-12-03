@@ -14,6 +14,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.example.xweather_v2.bean.CityBean;
 import com.example.xweather_v2.city_manager.CityManagerActivity;
+import com.example.xweather_v2.db.DatabaseBean;
 import com.example.xweather_v2.db.DatabaseManager;
 import com.example.xweather_v2.today_weather.CityFragmentPagerAdapter;
 import com.example.xweather_v2.today_weather.CityWeatherFragment;
@@ -39,11 +40,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     String mockCurrentCityJson = "{\"id\":6183235,\"name\":\"Winnipeg\",\"state\":\"\",\"country\":\"CA\",\"coord\":{\"lon\":-97.147041,\"lat\":49.884399}}";
 
     List<Fragment> fragmentList; // Data source of the View Pager
-    List<String> cityList;
+    List<CityBean> cityBeanListFromDB;
     List<ImageView> imageViewList;
     private CityFragmentPagerAdapter adapter;
 
-    public static List<CityBean> cityListBean;
+    public static List<CityBean> cityBeanListFromFile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,11 +64,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         main_img_more.setOnClickListener(this);
 
         fragmentList = new ArrayList<>();
-        cityList = DatabaseManager.queryAllCityName(); // Get the city list in the database
+
+        cityBeanListFromDB = fetchAllCityInfoFromDB();
         imageViewList = new ArrayList<>();
-        if (cityList.size() == 0) {
-            cityList.add("Winnipeg");
-            cityList.add("Toronto");
+
+        CityBean defaultCityBean;
+        defaultCityBean = new Gson().fromJson(mockCurrentCityJson, CityBean.class);
+
+
+        if (cityBeanListFromDB.size() == 0) {
+            cityBeanListFromDB.add(defaultCityBean);
         }
 
         initPager(); // Init View Pager
@@ -77,13 +83,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         main_vp.setCurrentItem(fragmentList.size() - 1); // Set the default view is the last added one.
     }
 
+    private List<CityBean> fetchAllCityInfoFromDB() {
+        List<DatabaseBean> dbBean = DatabaseManager.queryAllInfo();
+        List<CityBean> returnList = new ArrayList<>();
+        for (DatabaseBean db : dbBean) {
+            CityBean city = new CityBean();
+            city.setName(db.getCity());
+            city.setId(db.getId());
+            CityBean.CoordBean cb = new CityBean.CoordBean(db.getLon(), db.getLat());
+            city.setCoord(cb);
+            returnList.add(city);
+        }
+        return returnList;
+    }
+
     private void initPager() {
         // Create Fragment objects, add them to the view pager data source.
-        for (int i = 0; i < cityList.size(); i++) {
+        for (int i = 0; i < cityBeanListFromDB.size(); i++) {
             CityWeatherFragment cityWeatherFragment = new CityWeatherFragment();
 
             Bundle bundle = new Bundle();
-            bundle.putString("city_name", cityList.get(i));
+            bundle.putInt("city_id", cityBeanListFromDB.get(0).getId());
+            bundle.putString("city_name", cityBeanListFromDB.get(i).getName());
+            bundle.putDouble("city_lat", cityBeanListFromDB.get(i).getCoord().getLat());
+            bundle.putDouble("city_lon", cityBeanListFromDB.get(i).getCoord().getLon());
             cityWeatherFragment.setArguments(bundle);
             fragmentList.add(cityWeatherFragment);
         }
@@ -166,14 +189,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //                },
 //                ]
 
-                cityListBean = new Gson().fromJson(builder.toString(), new TypeToken<List<CityBean>>() {
+                cityBeanListFromFile = new Gson().fromJson(builder.toString(), new TypeToken<List<CityBean>>() {
                 }.getType());
 
                 Log.d("city_list", builder.toString());
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            return cityListBean;
+            return cityBeanListFromFile;
         }
 
         @Override
