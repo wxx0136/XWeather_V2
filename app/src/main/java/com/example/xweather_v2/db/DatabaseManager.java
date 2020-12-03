@@ -18,18 +18,6 @@ public class DatabaseManager {
         database = databaseHelper.getWritableDatabase();
     }
 
-    // Search city list in the database
-//    public static List<String> queryAllCityName() {
-//        @SuppressLint("Recycle") Cursor cursor = database.query("info", null, null, null, null, null, null);
-//        List<String> cityList = new ArrayList<>();
-//        while (cursor.moveToNext()) {
-//            String city_id = cursor.getString(cursor.getColumnIndex("id"));
-//            cityList.add(city_id);
-//        }
-//
-//        return cityList;
-//    }
-
     // Based on the city name, update the content
     public static int updateInfoByCity(int id, String content) {
         ContentValues values = new ContentValues();
@@ -38,14 +26,16 @@ public class DatabaseManager {
     }
 
     // Add a new city
-    public static long addCityInfo(int id, String city, double lat, double lon, String content) {
+    public static void addCityInfo(int id, String city, String state, String country, double lat, double lon, String content) {
         ContentValues values = new ContentValues();
         values.put("id", id);
         values.put("city", city);
+        values.put("state", state);
+        values.put("country", country);
         values.put("lat", lat);
         values.put("lon", lon);
         values.put("content", content);
-        return database.insert("info", null, values);
+        database.insert("info", null, values);
     }
 
     // Query the weather info based on the city name.
@@ -72,13 +62,20 @@ public class DatabaseManager {
             int _pk = cursor.getInt(cursor.getColumnIndex("_pk"));
             int id = cursor.getInt(cursor.getColumnIndex("id"));
             String city = cursor.getString(cursor.getColumnIndex("city"));
+            String state = cursor.getString(cursor.getColumnIndex("state"));
+            String country = cursor.getString(cursor.getColumnIndex("country"));
             double lat = cursor.getDouble(cursor.getColumnIndex("lat"));
             double lon = cursor.getDouble(cursor.getColumnIndex("lon"));
             String content = cursor.getString(cursor.getColumnIndex("content"));
-            DatabaseBean bean = new DatabaseBean(_pk, id, city, lat, lon, content);
+            DatabaseBean bean = new DatabaseBean(_pk, id, city, state, country, lat, lon, content);
             databaseBeanList.add(bean);
         }
         return databaseBeanList;
+    }
+
+    // Based on the city_id, remove the info of this city in the database
+    public static void removeInfoByCity(int id) {
+        database.delete("info", "id=?", new String[]{String.valueOf(id)});
     }
 
 

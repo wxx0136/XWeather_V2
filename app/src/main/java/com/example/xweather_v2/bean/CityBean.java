@@ -22,7 +22,7 @@ public class CityBean implements Serializable {
 
     @Override
     public @NotNull String toString() {
-        String str = "";
+        String str;
         if (Objects.equals(state, "")) {
             str = name + ", (Prov/State), " + country;
         } else {
