@@ -99,7 +99,7 @@ public class CityWeatherFragment extends BaseFragment {
 
         txt_city_name.setText(city_name);
         txt_temperature.setText(Math.round(oneCallBean.getCurrent().getTemp()) + unit_temp);
-        txt_description.setText(oneCallBean.getCurrent().getWeather().get(0).getDescription());
+        txt_description.setText(capitalizeWord(oneCallBean.getCurrent().getWeather().get(0).getDescription()));
         txt_date_time.setText(Common.convertUnixToDate(oneCallBean.getCurrent().getDt()));
         txt_maxTemp.setText(Math.round(oneCallBean.getDaily().get(0).getTemp().getMax()) + "");
         txt_minTemp.setText(Math.round(oneCallBean.getDaily().get(0).getTemp().getMin()) + "");
@@ -121,9 +121,20 @@ public class CityWeatherFragment extends BaseFragment {
 
         // hourly recycle view adapter set
         HourlyForecastAdapter hourlyForecastAdapter = new HourlyForecastAdapter(getActivity(), oneCallBean);
-        RecyclerView.LayoutManager layoutManager = new StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.HORIZONTAL);
+        RecyclerView.LayoutManager layoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL);
         recyclerView_hourly.setLayoutManager(layoutManager);
         recyclerView_hourly.setAdapter(hourlyForecastAdapter);
+    }
+
+    private String capitalizeWord(String str) {
+        String[] words = str.split("\\s");
+        StringBuilder capitalizeWord = new StringBuilder();
+        for (String w : words) {
+            String first = w.substring(0, 1);
+            String afterFirst = w.substring(1);
+            capitalizeWord.append(first.toUpperCase()).append(afterFirst).append(" ");
+        }
+        return capitalizeWord.toString().trim();
     }
 
     // Calculate the wind direction by JSON: wind.deg data.
@@ -185,7 +196,7 @@ public class CityWeatherFragment extends BaseFragment {
         // hourly recycler view
         recyclerView_hourly = view.findViewById(R.id.recycler_view_hourly);
 
-     }
+    }
 
     @Override
     public void onSuccess(String result) {
