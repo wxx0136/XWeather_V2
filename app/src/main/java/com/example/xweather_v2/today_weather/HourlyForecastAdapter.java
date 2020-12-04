@@ -36,7 +36,7 @@ public class HourlyForecastAdapter extends RecyclerView.Adapter<HourlyForecastAd
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        String hour = Common.convertUnixToWeekday(oneCallBean.getHourly().get(position + 1).getDt()).split(":")[0];
+        String hour = Common.convertUnixToHour(oneCallBean.getHourly().get(position + 1).getDt()).split(":")[0];
 
         String unit_temp;
         if (Common.units.equals("metric")) {
@@ -45,8 +45,8 @@ public class HourlyForecastAdapter extends RecyclerView.Adapter<HourlyForecastAd
             unit_temp = "℉";
         }
 
-        holder.txt_listView_hourly_item_clock.setText(Integer.parseInt(hour) < 10 ? "0" + hour : hour);
-        holder.txt_listView_hourly_item_temperature.setText(oneCallBean.getHourly().get(position + 1).getTemp() + unit_temp);
+        holder.txt_listView_hourly_item_clock.setText(hour);
+        holder.txt_listView_hourly_item_temperature.setText(Math.round(oneCallBean.getHourly().get(position + 1).getTemp()) + unit_temp);
 
         String iconURL = "https://openweathermap.org/img/wn/" + oneCallBean.getHourly().get(position + 1).getWeather().get(0).getIcon() + "@2x.png";
         Picasso.get().load(iconURL).into(holder.image_listView_hourly_item_weather);

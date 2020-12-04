@@ -118,20 +118,17 @@
 
         </LinearLayout>
 
-        <!--        today 24 hours-->
-        <!--        <fragment-->
-        <!--            android:id="@+id/fragment_hourly_forecast"-->
-        <!--            android:name="com.example.xweather_v2.today_weather.HourlyForecastFragment"-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="wrap_content" />-->
-
-        <!--        future general-->
+        <androidx.recyclerview.widget.RecyclerView
+            android:background="@drawable/bg_bottom_line"
+            android:id="@+id/recycler_view_hourly"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
 
         <ListView
-            android:background="@drawable/bg_bottom_line"
             android:id="@+id/listVIew_daily"
             android:layout_width="match_parent"
             android:layout_height="226dp"
+            android:background="@drawable/bg_bottom_line"
             android:divider="@null"
             android:dividerHeight="0dp"
             tools:ignore="NestedScrolling" />

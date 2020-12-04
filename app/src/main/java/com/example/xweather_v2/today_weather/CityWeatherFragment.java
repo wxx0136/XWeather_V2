@@ -12,6 +12,9 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
+
 import com.example.xweather_v2.BuildConfig;
 import com.example.xweather_v2.R;
 import com.example.xweather_v2.base.BaseFragment;
@@ -31,7 +34,8 @@ public class CityWeatherFragment extends BaseFragment {
     private ImageView img_weather;
     private TextView txt_city_name, txt_temperature, txt_description, txt_date_time, txt_maxTemp, txt_minTemp,
             txt_sunrise, txt_sunset, txt_wind, txt_feelsLike, txt_pressure, txt_humidity, txt_visibility, txt_cloudiness, txt_pop, txt_uvi;
-    private ListView listVIew_daily, listView_hourly;
+    private ListView listVIew_daily;
+    private RecyclerView recyclerView_hourly;
 
 
     private int city_id;
@@ -113,8 +117,15 @@ public class CityWeatherFragment extends BaseFragment {
         txt_pop.setText(decimalFormat.format(oneCallBean.getDaily().get(0).getPop() * 100) + "%");
         txt_uvi.setText(decimalFormat.format(oneCallBean.getCurrent().getUvi()) + "");
 
+        // daily list view adapter set
         DailyForecastAdapter dailyForecastAdapter = new DailyForecastAdapter(getActivity(), oneCallBean );
         listVIew_daily.setAdapter(dailyForecastAdapter);
+
+        // hourly recycle view adapter set
+        HourlyForecastAdapter hourlyForecastAdapter = new HourlyForecastAdapter(getActivity(),oneCallBean);
+        RecyclerView.LayoutManager layoutManager = new StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.HORIZONTAL);
+        recyclerView_hourly.setLayoutManager(layoutManager);
+        recyclerView_hourly.setAdapter(hourlyForecastAdapter);
     }
 
     // Calculate the wind direction by JSON: wind.deg data.
@@ -164,7 +175,7 @@ public class CityWeatherFragment extends BaseFragment {
         txt_pop = view.findViewById(R.id.txt_pop);
         txt_uvi = view.findViewById(R.id.txt_uvi);
 
-        // list View
+        // daily list View
         listVIew_daily = view.findViewById(R.id.listVIew_daily);
         listVIew_daily.setOnTouchListener((v, event) -> {
             if (event.getAction() == MotionEvent.ACTION_MOVE) {
@@ -173,7 +184,10 @@ public class CityWeatherFragment extends BaseFragment {
             return true;
         });
 
-    }
+        // hourly recycler view
+        recyclerView_hourly = view.findViewById(R.id.recycler_view_hourly);
+
+     }
 
     @Override
     public void onSuccess(String result) {
