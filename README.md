@@ -6,13 +6,35 @@ This is a weather forecasting app for Android. It consists of 5 pages: Current W
 
 **Current Weather:** It is a fragment that is dynamically generated on ViewPager and consists of LinerLayout, LinerLayout, RecycleView, and ListView; 
 
+<div align=center>
+<img width="300" src="https://github.com/wxx0136/XWeather_V2/blob/dev_gps/demo_images/Screenshot_1607104200.png">
+<img width="300" src="https://github.com/wxx0136/XWeather_V2/blob/dev_gps/demo_images/Screenshot_1607104205.png">
+</div>
+
 **City Management:** Add or remove cities that you want to collect. It shows the cities that are currently stored in the database (SQLite) through a ListView;
+
+<div align=center>
+<img width="300" src="https://github.com/wxx0136/XWeather_V2/blob/dev_gps/demo_images/Screenshot_1607104212.png">
+</div>
 
 **City Search:** Parses the local JSON file to get the city's latitude and longitude and returns it to the current weather for API query. It fudges the query by entering city keywords via SearchView and presents the results on the corresponding ListView.
 
+<div align=center>
+<img width="300" src="https://github.com/wxx0136/XWeather_V2/blob/dev_gps/demo_images/Screenshot_1607104227.png">
+</div>
+
 **City Deletion:** Use CardView and ListView together to display the city information that exists in the current database, and return the updated data set to the database to update the city list.
 
+<div align=center>
+<img width="300" src="https://github.com/wxx0136/XWeather_V2/blob/dev_gps/demo_images/Screenshot_1607104241.png">
+</div>
+
 **Settings:** Android X's reference is used to set the unit system ID, which is used to query the API and convert the display results to the unit standard.
+
+<div align=center>
+<img width="300" src="https://github.com/wxx0136/XWeather_V2/blob/dev_gps/demo_images/Screenshot_1607104252.png">
+<img width="300" src="https://github.com/wxx0136/XWeather_V2/blob/dev_gps/demo_images/Screenshot_1607104356.png">
+</div>
 
 # Development Reflection
 This is a highly finished application, and I have spent 80-100 hours on this project. It covers many of the Android knowledge points taught in my class and uses them in greater depth and flexibility to meet the needs of the project. During the development process, the biggest challenges came from two things: 
