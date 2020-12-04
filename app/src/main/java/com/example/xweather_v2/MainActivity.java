@@ -77,30 +77,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         // First time running, give a default location. Can be changed by GPS later.
         CityBean defaultCityBean = new Gson().fromJson(mockCurrentCityJson, CityBean.class);
-        if (cityListFromDB.size() == 0) {
-            cityListFromDB.add(defaultCityBean);
-        }
+        if (cityListFromDB.size() == 0) cityListFromDB.add(defaultCityBean);
 
         // Jump back from SearchCity Activity
-        try {
-            CityBean intentCityBean = (CityBean) getIntent().getSerializableExtra("cityBean");
-            if (intentCityBean != null && !cityListFromDB.contains(intentCityBean)) {
-                cityListFromDB.add(intentCityBean);
-            }
-        } catch (Exception exception) {
-            Log.d("xwei.Main.onCreate", exception.toString());
-        }
-        Log.d("xwei.Main.db content", cityListFromDB.toString());
+
+        CityBean intentCityBean = (CityBean) getIntent().getSerializableExtra("cityBean");
+        if (intentCityBean != null && !cityListFromDB.contains(intentCityBean))
+            cityListFromDB.add(intentCityBean);
 
         initPager(); // Init View Pager
         adapter = new CityFragmentPagerAdapter(getSupportFragmentManager(), 0, fragmentList);
         main_vp.setAdapter(adapter);
+
         initPoint();
-        getCurrentPositionOfViewPager();
         main_vp.setCurrentItem(fragmentList.size() - 1); // Set the default view is the last added one.
+        getCurrentPositionOfViewPager();
+
     }
 
-    private void getCurrentPositionOfViewPager(){
+    private void getCurrentPositionOfViewPager() {
         main_vp.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -238,7 +233,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     //  Get the city list for other activity to use later.
     private class loadCities extends SimpleAsyncTask<List<CityBean>> {
-
         @Override
         protected List<CityBean> doInBackgroundSimple() {
             List<CityBean> beanList = new ArrayList<>();
