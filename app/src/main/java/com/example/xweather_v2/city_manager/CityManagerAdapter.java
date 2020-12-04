@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.example.xweather_v2.R;
 import com.example.xweather_v2.bean.OneCallBean;
+import com.example.xweather_v2.common.Common;
 import com.example.xweather_v2.db.DatabaseBean;
 import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
@@ -66,7 +67,14 @@ public class CityManagerAdapter extends BaseAdapter {
 
         String iconURL = "https://openweathermap.org/img/wn/" + oneCallBean.getCurrent().getWeather().get(0).getIcon() + "@2x.png";
         Picasso.get().load(iconURL).into(holder.image_weather);
-        holder.txt_temperature.setText(Math.round(oneCallBean.getCurrent().getTemp()) + " ℃");
+
+        String unit_temp;
+        if (Common.units.equals("metric")) {
+            unit_temp = "℃";
+        } else {
+            unit_temp = "℉";
+        }
+        holder.txt_temperature.setText(Math.round(oneCallBean.getCurrent().getTemp()) + unit_temp);
 
         return convertView;
     }
