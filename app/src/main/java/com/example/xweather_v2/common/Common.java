@@ -17,7 +17,7 @@ public class Common {
 
     public static String convertUnixToWeekday(long dt) {
         Date date = new Date(dt * 1000L);
-        @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("EEE");
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("EEEE");
         return simpleDateFormat.format(date);
     }
 

@@ -39,15 +39,8 @@ public class HourlyForecastAdapter extends RecyclerView.Adapter<HourlyForecastAd
         String hour = Common.convertUnixToHour(oneCallBean.getHourly().get(position + 1).getDt()).split(":")[0];
         double pop = oneCallBean.getHourly().get(position + 1).getPop() * 100;
 
-        String unit_temp;
-        if (Common.units.equals("metric")) {
-            unit_temp = "℃";
-        } else {
-            unit_temp = "℉";
-        }
-
         holder.txt_recycler_hourly_item_clock.setText(hour);
-        holder.txt_recycler_hourly_item_temperature.setText(Math.round(oneCallBean.getHourly().get(position + 1).getTemp()) + unit_temp);
+        holder.txt_recycler_hourly_item_temperature.setText(Math.round(oneCallBean.getHourly().get(position + 1).getTemp()) + "°");
         if (pop != 0) {
             holder.txt_recycler_hourly_item_pop.setText(Double.valueOf(pop).intValue() + "%");
         }

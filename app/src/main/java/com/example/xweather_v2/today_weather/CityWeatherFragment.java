@@ -44,8 +44,6 @@ public class CityWeatherFragment extends BaseFragment {
     private String city_country;
     private double city_lat, city_lon;
 
-    private OneCallBean oneCallBean;
-
     public CityWeatherFragment() {
         // Required empty public constructor
     }
@@ -83,8 +81,8 @@ public class CityWeatherFragment extends BaseFragment {
 
     @SuppressLint({"SetTextI18n", "ClickableViewAccessibility"})
     private void parseShowData(String result) {
-        // 使用Gson解析数据
-        oneCallBean = new Gson().fromJson(result, OneCallBean.class);
+        // Use GSON to parse the json object.
+        OneCallBean oneCallBean = new Gson().fromJson(result, OneCallBean.class);
         // today_general
         String iconURL = "https://openweathermap.org/img/wn/" + oneCallBean.getCurrent().getWeather().get(0).getIcon() + "@2x.png";
         Picasso.get().load(iconURL).into(img_weather);
@@ -109,20 +107,20 @@ public class CityWeatherFragment extends BaseFragment {
         txt_sunrise.setText(Common.convertUnixToHour(oneCallBean.getCurrent().getSunrise()));
         txt_sunset.setText(Common.convertUnixToHour(oneCallBean.getCurrent().getSunset()));
         txt_cloudiness.setText(oneCallBean.getCurrent().getClouds() + "%");
-        txt_wind.setText(getWindDirection(oneCallBean.getCurrent().getWind_deg()) + " " + oneCallBean.getCurrent().getWind_speed() + unit_windSpeed);
-        txt_feelsLike.setText(Math.round(oneCallBean.getCurrent().getFeels_like()) + unit_temp);
-        txt_pressure.setText(oneCallBean.getCurrent().getPressure() + "hPa");
+        txt_wind.setText(getWindDirection(oneCallBean.getCurrent().getWind_deg()) + " " + oneCallBean.getCurrent().getWind_speed() + " " + unit_windSpeed);
+        txt_feelsLike.setText(Math.round(oneCallBean.getCurrent().getFeels_like()) + "°");
+        txt_pressure.setText(oneCallBean.getCurrent().getPressure() + " hPa");
         txt_humidity.setText(oneCallBean.getCurrent().getHumidity() + "%");
-        txt_visibility.setText(oneCallBean.getCurrent().getVisibility() / 1000 + "km");
+        txt_visibility.setText(oneCallBean.getCurrent().getVisibility() / 1000 + " km");
         txt_pop.setText(decimalFormat.format(oneCallBean.getDaily().get(0).getPop() * 100) + "%");
         txt_uvi.setText(decimalFormat.format(oneCallBean.getCurrent().getUvi()) + "");
 
         // daily list view adapter set
-        DailyForecastAdapter dailyForecastAdapter = new DailyForecastAdapter(getActivity(), oneCallBean );
+        DailyForecastAdapter dailyForecastAdapter = new DailyForecastAdapter(getActivity(), oneCallBean);
         listVIew_daily.setAdapter(dailyForecastAdapter);
 
         // hourly recycle view adapter set
-        HourlyForecastAdapter hourlyForecastAdapter = new HourlyForecastAdapter(getActivity(),oneCallBean);
+        HourlyForecastAdapter hourlyForecastAdapter = new HourlyForecastAdapter(getActivity(), oneCallBean);
         RecyclerView.LayoutManager layoutManager = new StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.HORIZONTAL);
         recyclerView_hourly.setLayoutManager(layoutManager);
         recyclerView_hourly.setAdapter(hourlyForecastAdapter);
