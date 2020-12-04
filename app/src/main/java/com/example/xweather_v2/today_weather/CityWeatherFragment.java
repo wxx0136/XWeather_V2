@@ -111,7 +111,7 @@ public class CityWeatherFragment extends BaseFragment {
         txt_humidity.setText(oneCallBean.getCurrent().getHumidity() + "%");
         txt_visibility.setText(oneCallBean.getCurrent().getVisibility() / 1000 + "km");
         txt_pop.setText(decimalFormat.format(oneCallBean.getDaily().get(0).getPop() * 100) + "%");
-        txt_uvi.setText(oneCallBean.getCurrent().getUvi() + "");
+        txt_uvi.setText(decimalFormat.format(oneCallBean.getCurrent().getUvi()) + "");
 
         DailyForecastAdapter dailyForecastAdapter = new DailyForecastAdapter(getActivity(), oneCallBean );
         listVIew_daily.setAdapter(dailyForecastAdapter);

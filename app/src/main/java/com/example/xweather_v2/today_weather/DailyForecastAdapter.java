@@ -32,7 +32,7 @@ public class DailyForecastAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return oneCallBean.getDaily().size()-1;
+        return oneCallBean.getDaily().size() - 1;
     }
 
     @Override
@@ -57,11 +57,11 @@ public class DailyForecastAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        holder.txt_listView_daily_item_day.setText(Common.convertUnixToWeekday(oneCallBean.getDaily().get(position+1).getDt()));
-        holder.txt_listView_daily_item_maxTemp.setText(Math.round(oneCallBean.getDaily().get(position+1).getTemp().getMax()) + "");
-        holder.txt_listView_daily_item_minTemp.setText(Math.round(oneCallBean.getDaily().get(position+1).getTemp().getMin()) + "");
+        holder.txt_listView_daily_item_day.setText(Common.convertUnixToWeekday(oneCallBean.getDaily().get(position + 1).getDt()));
+        holder.txt_listView_daily_item_maxTemp.setText(Math.round(oneCallBean.getDaily().get(position + 1).getTemp().getMax()) + "");
+        holder.txt_listView_daily_item_minTemp.setText(Math.round(oneCallBean.getDaily().get(position + 1).getTemp().getMin()) + "");
 
-        String iconURL = "https://openweathermap.org/img/wn/" + oneCallBean.getDaily().get(position+1).getWeather().get(0).getIcon() + "@2x.png";
+        String iconURL = "https://openweathermap.org/img/wn/" + oneCallBean.getDaily().get(position + 1).getWeather().get(0).getIcon() + "@2x.png";
         Picasso.get().load(iconURL).into(holder.image_listView_daily_item_weather);
 
         return convertView;
