@@ -1,48 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_gravity="center_horizontal"
-    android:layout_marginLeft="16dp"
-    android:layout_marginRight="16dp"
-    android:layout_marginTop="8dp"
-    android:layout_marginBottom="8dp"
-
-    >
+    android:layout_height="40dp"
+    android:paddingLeft="16dp"
+    android:paddingTop="8dp"
+    android:paddingRight="16dp"
+    android:paddingBottom="8dp">
 
     <TextView
+        android:id="@+id/txt_listView_daily_item_day"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="2"
         android:text="Wed"
         android:textColor="@color/design_default_color_primary"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        tools:ignore="HardcodedText" />
 
     <ImageView
+        android:id="@+id/image_listView_daily_item_weather"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="2"
         android:paddingLeft="8dp"
         android:paddingRight="8dp"
-        app:srcCompat="@drawable/ic_launcher_background" />
+        app:srcCompat="@drawable/ic_launcher_background"
+        tools:ignore="ContentDescription" />
 
     <TextView
+        android:id="@+id/txt_listView_daily_item_maxTemp"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:text="15"
         android:textAlignment="center"
         android:textColor="@color/design_default_color_primary"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        tools:ignore="HardcodedText" />
 
     <TextView
+        android:id="@+id/txt_listView_daily_item_minTemp"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:text="-5"
         android:textAlignment="center"
         android:textColor="@color/purple_200"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        tools:ignore="HardcodedText" />
+
 
 </LinearLayout>

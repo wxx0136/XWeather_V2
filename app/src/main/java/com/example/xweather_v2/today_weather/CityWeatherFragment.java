@@ -5,9 +5,11 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.xweather_v2.BuildConfig;
@@ -29,12 +31,16 @@ public class CityWeatherFragment extends BaseFragment {
     private ImageView img_weather;
     private TextView txt_city_name, txt_temperature, txt_description, txt_date_time, txt_maxTemp, txt_minTemp,
             txt_sunrise, txt_sunset, txt_wind, txt_feelsLike, txt_pressure, txt_humidity, txt_visibility, txt_cloudiness, txt_pop, txt_uvi;
+    private ListView listVIew_daily, listView_hourly;
+
 
     private int city_id;
     private String city_name;
     private String city_state;
     private String city_country;
     private double city_lat, city_lon;
+
+    private OneCallBean oneCallBean;
 
     public CityWeatherFragment() {
         // Required empty public constructor
@@ -71,14 +77,13 @@ public class CityWeatherFragment extends BaseFragment {
         return view;
     }
 
-
-    @SuppressLint("SetTextI18n")
+    @SuppressLint({"SetTextI18n", "ClickableViewAccessibility"})
     private void parseShowData(String result) {
         // 使用Gson解析数据
-
-        OneCallBean oneCallBean = new Gson().fromJson(result, OneCallBean.class);
+        oneCallBean = new Gson().fromJson(result, OneCallBean.class);
         // today_general
         String iconURL = "https://openweathermap.org/img/wn/" + oneCallBean.getCurrent().getWeather().get(0).getIcon() + "@2x.png";
+        Picasso.get().load(iconURL).into(img_weather);
 
         String unit_temp, unit_windSpeed;
         if (Common.units.equals("metric")) {
@@ -90,7 +95,6 @@ public class CityWeatherFragment extends BaseFragment {
         }
         DecimalFormat decimalFormat = new DecimalFormat("###################.###########");
 
-        Picasso.get().load(iconURL).into(img_weather);
         txt_city_name.setText(city_name);
         txt_temperature.setText(Math.round(oneCallBean.getCurrent().getTemp()) + unit_temp);
         txt_description.setText(oneCallBean.getCurrent().getWeather().get(0).getDescription());
@@ -101,13 +105,16 @@ public class CityWeatherFragment extends BaseFragment {
         txt_sunrise.setText(Common.convertUnixToHour(oneCallBean.getCurrent().getSunrise()));
         txt_sunset.setText(Common.convertUnixToHour(oneCallBean.getCurrent().getSunset()));
         txt_cloudiness.setText(oneCallBean.getCurrent().getClouds() + "%");
-        txt_wind.setText(getWindDirection(oneCallBean.getCurrent().getWind_deg()) + " " + oneCallBean.getCurrent().getWind_speed() +  unit_windSpeed);
-        txt_feelsLike.setText(Math.round(oneCallBean.getCurrent().getFeels_like()) +  unit_temp);
+        txt_wind.setText(getWindDirection(oneCallBean.getCurrent().getWind_deg()) + " " + oneCallBean.getCurrent().getWind_speed() + unit_windSpeed);
+        txt_feelsLike.setText(Math.round(oneCallBean.getCurrent().getFeels_like()) + unit_temp);
         txt_pressure.setText(oneCallBean.getCurrent().getPressure() + "hPa");
         txt_humidity.setText(oneCallBean.getCurrent().getHumidity() + "%");
         txt_visibility.setText(oneCallBean.getCurrent().getVisibility() / 1000 + "km");
-        txt_pop.setText(decimalFormat.format(oneCallBean.getDaily().get(0).getPop()*100) + "%");
+        txt_pop.setText(decimalFormat.format(oneCallBean.getDaily().get(0).getPop() * 100) + "%");
         txt_uvi.setText(oneCallBean.getCurrent().getUvi() + "");
+
+        DailyForecastAdapter dailyForecastAdapter = new DailyForecastAdapter(getActivity(), oneCallBean );
+        listVIew_daily.setAdapter(dailyForecastAdapter);
     }
 
     // Calculate the wind direction by JSON: wind.deg data.
@@ -135,6 +142,7 @@ public class CityWeatherFragment extends BaseFragment {
     }
 
 
+    @SuppressLint("ClickableViewAccessibility")
     private void initView(View view) {
 //        today_general
         img_weather = view.findViewById(R.id.img_weather);
@@ -155,6 +163,16 @@ public class CityWeatherFragment extends BaseFragment {
         txt_visibility = view.findViewById(R.id.txt_visibility);
         txt_pop = view.findViewById(R.id.txt_pop);
         txt_uvi = view.findViewById(R.id.txt_uvi);
+
+        // list View
+        listVIew_daily = view.findViewById(R.id.listVIew_daily);
+        listVIew_daily.setOnTouchListener((v, event) -> {
+            if (event.getAction() == MotionEvent.ACTION_MOVE) {
+                return true;
+            }
+            return true;
+        });
+
     }
 
     @Override
