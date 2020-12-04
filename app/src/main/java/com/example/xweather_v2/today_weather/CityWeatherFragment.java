@@ -135,7 +135,7 @@ public class CityWeatherFragment extends BaseFragment {
 //        today_details
         txt_sunrise = view.findViewById(R.id.txt_sunrise);
         txt_sunset = view.findViewById(R.id.txt_sunset);
-        txt_cloudiness = view.findViewById(R.id.txt_cloudiness);
+        txt_cloudiness = view.findViewById(R.id.txt_clouds);
         txt_wind = view.findViewById(R.id.txt_wind);
         txt_feelsLike = view.findViewById(R.id.txt_feelsLike);
         txt_pressure = view.findViewById(R.id.txt_pressure);
