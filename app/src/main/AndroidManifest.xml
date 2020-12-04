@@ -16,6 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.XWeather_V2"
         tools:ignore="AllowBackup">
+        <activity android:name=".setting.SettingActivity" />
         <activity android:name=".city_manager.RemoveCityActivity" />
         <activity android:name=".city_manager.SearchCityActivity" />
         <activity android:name=".city_manager.CityManagerActivity" />

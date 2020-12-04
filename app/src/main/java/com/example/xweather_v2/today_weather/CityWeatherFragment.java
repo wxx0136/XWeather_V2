@@ -44,6 +44,7 @@ public class CityWeatherFragment extends BaseFragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_city_weather, container, false);
         initView(view);
+
         // GET http request
         String currentWeatherAPI = "https://api.openweathermap.org/data/2.5/onecall";
         RequestParams params = new RequestParams(currentWeatherAPI);

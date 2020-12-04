@@ -38,7 +38,6 @@ public class SearchCityActivity extends AppCompatActivity implements View.OnClic
         image_back.setOnClickListener(this);
 
         initSearchViewStyle(searchView_bar);
-//        enableSearchView(searchView_bar, false);
         initAdapterForListView();
     }
 
@@ -73,8 +72,6 @@ public class SearchCityActivity extends AppCompatActivity implements View.OnClic
     private void initAdapterForListView() {
         if (MainActivity.cityListFromFile.isEmpty())
             throw new NullPointerException("MainActivity.cityListBeanList is empty.");
-
-//        enableSearchView(searchView_bar, true);
 
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, MainActivity.cityListFromFile);
         listView_city_list.setAdapter(adapter);
