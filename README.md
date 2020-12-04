@@ -5,7 +5,8 @@ You can't run this project without the **gradle.properties** file which I remove
 This is a weather forecasting app for Android. It consists of 5 pages: Current Weather, City Management, City Search, City Delete, and Settings.
 
 **Current Weather:** It is a fragment that is dynamically generated on ViewPager and consists of LinerLayout, LinerLayout, RecycleView, and ListView; 
-![image](img width="25%" height="25%" https://github.com/wxx0136/XWeather_V2/blob/dev_gps/demo_images/Screenshot_1607104200.png)
+
+<img width="25%" height="25%" https://github.com/wxx0136/XWeather_V2/blob/dev_gps/demo_images/Screenshot_1607104200.png>
 
 **City Management:** Add or remove cities that you want to collect. It shows the cities that are currently stored in the database (SQLite) through a ListView;
 
