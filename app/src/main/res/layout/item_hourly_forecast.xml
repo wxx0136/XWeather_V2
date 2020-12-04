@@ -1,45 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="50dp"
     android:layout_height="wrap_content"
     android:layout_margin="4dp">
 
     <TextView
-        android:id="@+id/txt_clock"
-        android:layout_width="25dp"
-        android:layout_height="20dp"
+        android:id="@+id/txt_listView_hourly_item_clock"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:text="00"
-        android:textAlignment="textEnd"
+        android:textAlignment="center"
         android:textColor="@color/purple_500"
-        android:textSize="16sp" />
-
-    <TextView
-        android:layout_width="25dp"
-        android:layout_height="20dp"
-        android:layout_toEndOf="@+id/txt_clock"
-        android:text="AM"
-        android:textAlignment="viewStart"
-        android:textColor="@color/purple_500"
-        android:textSize="12sp" />
+        android:textSize="16sp"
+        tools:ignore="HardcodedText" />
 
     <ImageView
-        android:id="@+id/image_weather"
+        android:id="@+id/image_listView_hourly_item_weather"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_below="@+id/txt_clock"
+        android:layout_below="@+id/txt_listView_hourly_item_clock"
         android:layout_marginTop="4dp"
         android:layout_marginBottom="4dp"
         android:background="@mipmap/ic_launcher"
-        android:contentDescription="image_weather" />
+        android:contentDescription="image_weather"
+        tools:ignore="HardcodedText" />
 
     <TextView
-        android:id="@+id/txt_temperature"
+        android:id="@+id/txt_listView_hourly_item_temperature"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/image_weather"
-        android:text="00 ℃"
+        android:layout_below="@+id/image_listView_hourly_item_weather"
+        android:text="00℃"
         android:textAlignment="center"
         android:textColor="@color/purple_500"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        tools:ignore="HardcodedText" />
 
 </RelativeLayout>
