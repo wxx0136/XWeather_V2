@@ -3,10 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="50dp"
     android:layout_height="wrap_content"
-    android:layout_margin="4dp">
+    android:paddingTop="4dp"
+    android:paddingBottom="4dp">
 
     <TextView
-        android:id="@+id/txt_listView_hourly_item_clock"
+        android:id="@+id/txt_recycler_hourly_item_clock"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="00"
@@ -15,19 +16,30 @@
         android:textSize="16sp"
         tools:ignore="HardcodedText" />
 
+    <TextView
+        android:id="@+id/txt_recycler_hourly_item_pop"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txt_recycler_hourly_item_clock"
+        android:textAlignment="center"
+        android:textColor="@color/purple_200"
+        android:textSize="12sp"
+        tools:ignore="HardcodedText" />
+
     <ImageView
-        android:id="@+id/image_listView_hourly_item_weather"
+        android:id="@+id/image_recycler_hourly_item_weather"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_below="@+id/txt_listView_hourly_item_clock"
+        android:layout_below="@+id/txt_recycler_hourly_item_clock"
+        android:layout_marginTop="4dp"
         android:contentDescription="image_weather"
         tools:ignore="HardcodedText" />
 
     <TextView
-        android:id="@+id/txt_listView_hourly_item_temperature"
+        android:id="@+id/txt_recycler_hourly_item_temperature"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/image_listView_hourly_item_weather"
+        android:layout_below="@+id/image_recycler_hourly_item_weather"
         android:text="00℃"
         android:textAlignment="center"
         android:textColor="@color/purple_500"
