@@ -6,10 +6,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Common {
-    public static final String UNIT_METRIC = "metric";
-    public static final String UNIT_IMPERIAL = "imperial";
 
-    public static String units = UNIT_METRIC;
+    public static String units;
 
     public static String convertUnixToDate(long dt) {
         Date date = new Date(dt * 1000L);
@@ -27,11 +25,6 @@ public class Common {
         Date date = new Date(sunrise * 1000L);
         @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
         return simpleDateFormat.format(date);
-    }
-
-    public void setUnits(String units) {
-        // metric：℃, imperial: ℉
-        Common.units = units;
     }
 
 }

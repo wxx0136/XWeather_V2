@@ -2,6 +2,7 @@ package com.example.xweather_v2;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -10,12 +11,15 @@ import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.preference.PreferenceManager;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.xweather_v2.bean.CityBean;
 import com.example.xweather_v2.city_manager.CityManagerActivity;
+import com.example.xweather_v2.common.Common;
 import com.example.xweather_v2.db.DatabaseBean;
 import com.example.xweather_v2.db.DatabaseManager;
+import com.example.xweather_v2.setting.SettingActivity;
 import com.example.xweather_v2.today_weather.CityFragmentPagerAdapter;
 import com.example.xweather_v2.today_weather.CityWeatherFragment;
 import com.google.gson.Gson;
@@ -32,7 +36,7 @@ import java.util.zip.GZIPInputStream;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    ImageView main_img_add_city, main_img_more;
+    ImageView main_img_add_city, main_img_setting;
     LinearLayout main_layout_point;
     ViewPager main_vp;
 
@@ -45,23 +49,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private CityFragmentPagerAdapter adapter;
 
     public static List<CityBean> cityListFromFile;
+    public static int currentPositionOfViewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Load preference setting
+        loadPreferenceSettings();
         // Use Async Task to get the city list first.
         new loadCities().execute();
 
         main_img_add_city = findViewById(R.id.main_img_add_city);
-        main_img_more = findViewById(R.id.main_img_more);
+        main_img_setting = findViewById(R.id.main_img_setting);
         main_layout_point = findViewById(R.id.main_layout_point);
         main_vp = findViewById(R.id.main_vp);
 
         // Add click events.
         main_img_add_city.setOnClickListener(this);
-        main_img_more.setOnClickListener(this);
+        main_img_setting.setOnClickListener(this);
 
         fragmentList = new ArrayList<>();
 
@@ -70,26 +77,46 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         // First time running, give a default location. Can be changed by GPS later.
         CityBean defaultCityBean = new Gson().fromJson(mockCurrentCityJson, CityBean.class);
-        if (cityListFromDB.size() == 0) {
-            cityListFromDB.add(defaultCityBean);
-        }
+        if (cityListFromDB.size() == 0) cityListFromDB.add(defaultCityBean);
 
         // Jump back from SearchCity Activity
-        try {
-            CityBean intentCityBean = (CityBean) getIntent().getSerializableExtra("cityBean");
-            if (intentCityBean != null && !cityListFromDB.contains(intentCityBean)) {
-                cityListFromDB.add(intentCityBean);
-            }
-        } catch (Exception exception) {
-            Log.d("xwei.Main.onCreate", exception.toString());
-        }
-        Log.d("xwei.Main.db content", cityListFromDB.toString());
+
+        CityBean intentCityBean = (CityBean) getIntent().getSerializableExtra("cityBean");
+        if (intentCityBean != null && !cityListFromDB.contains(intentCityBean))
+            cityListFromDB.add(intentCityBean);
 
         initPager(); // Init View Pager
         adapter = new CityFragmentPagerAdapter(getSupportFragmentManager(), 0, fragmentList);
         main_vp.setAdapter(adapter);
+
         initPoint();
         main_vp.setCurrentItem(fragmentList.size() - 1); // Set the default view is the last added one.
+        getCurrentPositionOfViewPager();
+
+    }
+
+    private void getCurrentPositionOfViewPager() {
+        main_vp.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                currentPositionOfViewPager = position;
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+    }
+
+    private void loadPreferenceSettings() {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        Common.units = sharedPreferences.getString("UNIT_SYSTEM", "metric");
     }
 
     @Override
@@ -112,7 +139,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         imageViewList.clear();
         main_layout_point.removeAllViews();
         initPoint();
-//        main_vp.setCurrentItem(fragmentList.size() - 1);
+        main_vp.setCurrentItem(fragmentList.size() - 1);
 
     }
 
@@ -197,8 +224,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.main_img_add_city:
                 intent.setClass(this, CityManagerActivity.class);
                 break;
-            case R.id.main_img_more:
-//                intent.setClass(this,MoreActivity.class);
+            case R.id.main_img_setting:
+                intent.setClass(this, SettingActivity.class);
                 break;
         }
         startActivity(intent);
@@ -206,7 +233,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     //  Get the city list for other activity to use later.
     private class loadCities extends SimpleAsyncTask<List<CityBean>> {
-
         @Override
         protected List<CityBean> doInBackgroundSimple() {
             List<CityBean> beanList = new ArrayList<>();
