@@ -1,5 +1,5 @@
 # Note
-You can't run this project without the **gradle.properties** file which I remove from github for the API key safety reason. Please contact me to get that file and put it under the root fold of this project.
+I remove the API key from **gradle.properties** in github for safety reason. Please contact me to get the API key or apply a free one from [openweathermap](https://openweathermap.org/)
 
 # Introduction
 This is a weather forecasting app for Android. It consists of 5 pages: Current Weather, City Management, City Search, City Delete, and Settings.

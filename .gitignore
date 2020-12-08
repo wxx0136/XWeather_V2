@@ -14,4 +14,4 @@
 .cxx
 local.properties
 /.idea/*
-/gradle.properties
+/app/src/main/java/com/example/xweather_v2/API_KEY.txt
