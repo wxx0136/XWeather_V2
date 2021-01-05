@@ -4,6 +4,8 @@ I remove the **API_KEY** from **gradle.properties** in github for safety reason.
 # Introduction
 This is a weather forecasting app for Android. It consists of 5 pages: Current Weather, City Management, City Search, City Delete, and Settings.
 
+Video Demo: https://youtu.be/7ocbZrPZ_3I
+
 **Current Weather:** It is a fragment that is dynamically generated on ViewPager and consists of LinerLayout, LinerLayout, RecycleView, and ListView; 
 
 <div align=center>
