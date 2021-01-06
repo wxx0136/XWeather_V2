@@ -1,10 +1,15 @@
-# Note
-I remove the **API_KEY** from **gradle.properties** in github for safety reason. Please contact me to get the API key or apply a free one from [openweathermap](https://openweathermap.org/)
-
 # Introduction
-This is a weather forecasting app for Android. It consists of 5 pages: Current Weather, City Management, City Search, City Delete, and Settings.
+I used Java to build a Weather Forecast Application on Android.
+
+This project incorporates the following techniques: Fragment, ScrollView, ListView, PagerAdapter, Activity Lifecycle management, AndroidX PreferenceLibrary, SQLite database, Network Connectivity(Interaction with APIs), JSON Parser, Java Bean, etc.
 
 Video Demo: https://youtu.be/7ocbZrPZ_3I
+
+---
+
+# Contents 
+
+This App consists of 5 pages: Current Weather, City Management, City Search, City Delete, and Settings.
 
 **Current Weather:** It is a fragment that is dynamically generated on ViewPager and consists of LinerLayout, LinerLayout, RecycleView, and ListView; 
 
@@ -46,7 +51,6 @@ This is a highly finished application, and I have spent 80-100 hours on this pro
 
 Fortunately, when the project was finally completed, I did have a better understanding of Android development. I had the confidence to interview for entry-level positions in Android development based on this development experience.
 
-
 # Resource
 - Plug-in: https://plugins.jetbrains.com/plugin/7654-gsonformat
 - API: https://openweathermap.org/api/one-call-api
@@ -56,3 +60,6 @@ Fortunately, when the project was finally completed, I did have a better underst
 # Tutorials:
 - Animee: https://www.bilibili.com/video/BV1QE411i7oQ?p=1&spm_id_from=333.788.b_6d756c74695f70616765.1
 - EDMT Dev: https://www.youtube.com/watch?v=awYSrhUZQL0&t=88s
+
+# Note
+I remove the **API_KEY** from **gradle.properties** in github for safety reason. Please contact me to get the API key or apply a free one from [openweathermap](https://openweathermap.org/)
