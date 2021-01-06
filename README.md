@@ -5,8 +5,6 @@ This project incorporates the following techniques: Fragment, ScrollView, ListVi
 
 Video Demo: https://youtu.be/7ocbZrPZ_3I
 
----
-
 # Contents 
 
 This App consists of 5 pages: Current Weather, City Management, City Search, City Delete, and Settings.
